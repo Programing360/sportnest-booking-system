@@ -19,7 +19,7 @@ const MyBookingPage = async () => {
       <h2 className="text-2xl md:text-4xl font-bold text-center">My Booking Page</h2>
       
       {bookingColl && bookingColl.length > 0 ? (
-        <div className="space-y-4 mt-7">
+        <div className="space-y-4 mt-7 px-4">
           {bookingColl?.map((booking) => (
             <MyBookingCard
               key={booking._id || booking.id}

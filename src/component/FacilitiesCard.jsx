@@ -48,7 +48,7 @@ const FacilitiesCard = ({ facilities }) => {
 
     try {
       const res = await bookingFacilities(bookingInfo);
-      // console.log(bookingInfo);
+
       if (res?.insertedId) {
         toast.success("🎯 Booking Successful! Check My Bookings.");
       } else {
@@ -63,7 +63,7 @@ const FacilitiesCard = ({ facilities }) => {
 
   return (
     <div className="w-full h-full">
-      <Card className="w-full h-full border border-gray-100 hover:border-orange-100 shadow-sm hover:shadow-xl hover:shadow-orange-500/[0.03] transition-all duration-500 rounded-[2.5rem] overflow-hidden bg-white flex flex-col justify-between group relative">
+      <Card className="w-full h-full border border-gray-100 hover:border-orange-100 shadow-sm hover:shadow-xl hover:shadow-orange-500/[0.03] transition-all duration-500 rounded-4xl overflow-hidden bg-white flex flex-col justify-between group relative">
         {/* Detail Page Link wrapper */}
         <Link
           href={`/featureCartDetails/${_id}`}
@@ -76,7 +76,7 @@ const FacilitiesCard = ({ facilities }) => {
                 alt={name || "Facility"}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out rounded-4xl"
                 priority
               />
             ) : (

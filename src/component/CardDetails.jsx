@@ -46,8 +46,8 @@ const CardDetails = ({ featureCard }) => {
   };
   
   return (
-    <div className="container mx-auto mt-20">
-      <Card className="w-full ">
+    <div className="container mx-auto mt-20 ">
+      <Card className="w-full rounded-4xl">
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
           <div className="max-h-[500px]">
             <Image

@@ -8,62 +8,78 @@ import FeatureCard from "./FeatureCard";
 const SearchFacilities = ({ featureData = [] }) => {
   const [searchText, setSearchText] = useState("");
   const [filterData, setFilterData] = useState(featureData);
-  
+
   const [selectedSport, setSelectedSport] = useState("");
 
   const uniqueSportTypes = Array.from(
-    new Set(featureData.map((item) => item.sportType).filter(Boolean))
+    new Set(featureData.map((item) => item.sportType).filter(Boolean)),
   );
 
-  const handleFilterAndSearch = () => {
+  const applyFilter = (searchValue, sortValue) => {
     let updatedData = [...featureData];
 
     if (searchText.trim() !== "") {
       updatedData = updatedData.filter((item) =>
-        item.name?.toLowerCase().trim().includes(searchText.toLowerCase().trim())
+        item.name
+          ?.toLowerCase()
+          .trim()
+          .includes(searchValue.toLowerCase().trim()),
       );
     }
 
     if (selectedSport !== "") {
-      updatedData = updatedData.filter(
-        (item) => item.sportType?.toLowerCase() === selectedSport.toLowerCase()
+      updatedData = featureData.filter(
+        (item) => item.sportType?.toLowerCase() === sortValue.toLowerCase(),
       );
     }
 
-    setFilterData(updatedData);
+    setFilterData(updatedData)
+
+  };
+
+   const handleFilterAndSearch = () => {
+    applyFilter(searchText, selectedSport);
+  };
+
+  const handleFilterByType = (e) => {
+
+    const value = e.target.value
+
+    setSelectedSport(value);
+
+  
+
+    applyFilter(searchText, value);
   };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      
       <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-10 pb-6 border-b border-gray-100">
-        <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 w-full md:w-auto tracking-tight">
+        <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 w-full md:w-auto tracking-tight dark:text-white-900">
           All Facilities
         </h1>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto items-center">
-          
-     
           <SearchField name="search" className="w-full sm:w-auto">
             <SearchField.Group className="relative flex items-center w-full sm:w-[320px] md:w-[360px] group">
-              <SearchField.SearchIcon className="absolute left-4 text-gray-400 group-focus-within:text-purple-600 transition-colors z-10" />
+              <SearchField.SearchIcon className="absolute left-4 text-gray-400 group-focus-within:text-orange-600 transition-colors z-10" />
 
               <SearchField.Input
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                className="w-full pl-11 pr-24 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl outline-none focus:border-purple-500 focus:bg-white transition-all text-sm font-medium placeholder:text-gray-400 shadow-sm"
+                className="w-full pl-11 pr-24 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl outline-none focus:border-orange-500 focus:bg-white transition-all text-sm font-medium placeholder:text-gray-400 shadow-sm"
                 placeholder="Search destinations..."
               />
 
               <div className="absolute right-2 flex items-center gap-1.5">
-                <SearchField.ClearButton 
-                  onClick={() => setSearchText("")} 
-                  className="text-gray-400 hover:text-gray-600 transition-colors mr-1" 
+                <SearchField.ClearButton
+                  onClick={() => setSearchText("")}
+                  className="text-gray-400 hover:text-gray-600 transition-colors mr-1"
                 />
                 <button
                   type="button"
                   onClick={handleFilterAndSearch}
-                  className="flex items-center gap-1.5 px-4 py-2 bg-purple-600 hover:bg-slate-800 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-md shadow-purple-200"
+                  className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-slate-800 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-md shadow-orange-200"
                 >
                   <Search size={14} className="stroke-[2.5]" />
                   <span className="hidden sm:inline">Search</span>
@@ -72,15 +88,14 @@ const SearchFacilities = ({ featureData = [] }) => {
             </SearchField.Group>
           </SearchField>
           <div className="relative w-full sm:w-[220px] shrink-0">
-          
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-500 pointer-events-none z-10 flex items-center gap-2">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none z-10 flex items-center gap-2">
               <SlidersHorizontal size={14} />
             </div>
 
             <select
               value={selectedSport}
-              onChange={(e) => setSelectedSport(e.target.value)}
-              className="w-full pl-10 pr-10 py-3.5 bg-gray-50/70 hover:bg-gray-100/50 border border-gray-200 rounded-2xl outline-none focus:border-purple-500 focus:bg-white text-sm font-semibold text-gray-700 shadow-sm appearance-none cursor-pointer transition-all"
+              onChange={(e) => handleFilterByType(e)}
+              className="w-full pl-10 pr-10 py-3.5 bg-gray-50/70 hover:bg-gray-100/50 border border-gray-200 rounded-2xl outline-none focus:border-orange-500 focus:bg-white text-sm font-semibold text-gray-700 shadow-sm appearance-none cursor-pointer transition-all"
             >
               <option value="">All Sports</option>
               {uniqueSportTypes.map((sportType) => (
@@ -95,11 +110,9 @@ const SearchFacilities = ({ featureData = [] }) => {
               </svg>
             </div>
           </div>
-
         </div>
       </div>
 
-      
       {filterData.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
           {filterData.map((feature) => (
@@ -107,7 +120,6 @@ const SearchFacilities = ({ featureData = [] }) => {
           ))}
         </div>
       ) : (
-       
         <div className="text-center py-20 bg-gray-50/50 rounded-[2rem] border border-dashed border-gray-200 max-w-md mx-auto px-6 mt-10">
           <p className="text-gray-400 font-bold text-lg mb-1">
             No Facilities Found

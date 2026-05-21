@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
-import { bookingFacilities } from "@/lib/data";
+import { bookingFacilities, myBookingFacilities } from "@/lib/data";
 import { Button, Card } from "@heroui/react";
 import { ImageOff } from "lucide-react";
 import Image from "next/image";
@@ -16,8 +16,16 @@ const FeatureCard = ({ feature }) => {
   const user = session?.user;
 
   const handleBooking = async () => {
+
+    const myBooking = await myBookingFacilities(user.id)
+    const matchBooking = myBooking.find(item => item.facility_id === feature._id)
+
+    if(matchBooking){
+      return toast.success('Already add your Choice Item')
+    }
+
     const bookingInfo = {
-      facility_id: _id,
+      facility_id: feature._id,
       userId: user?.id,
       userEmail: user?.email,
       image: feature.image,
@@ -27,6 +35,8 @@ const FeatureCard = ({ feature }) => {
       hours: 2,
       totalPrice: feature.pricePerHour,
     };
+
+
     const res = await bookingFacilities(bookingInfo);
     if (res.insertedId) {
       toast.success("Booking Successful");
@@ -42,7 +52,7 @@ const FeatureCard = ({ feature }) => {
           <figure>
             {isValidImage ? (
               <Image
-                src={imageSrc}
+                src={feature?.image}
                 alt={feature?.name || "Facility Image"}
                 width={400}
                 height={400}
@@ -67,12 +77,12 @@ const FeatureCard = ({ feature }) => {
             onClick={handleBooking}
             className="btn w-full bg-[#163962] text-white hover:scale-105 transition-all duration-200 active:scale-95 font-medium rounded-full shadow-sm text-sm "
           >
-            Book Now
+            Booking Now
           </Button>
         ) : (
           <Link href={"/login"}>
             <Button className="btn w-full bg-[#163962] text-white hover:scale-105 transition-all duration-200 active:scale-95 font-medium rounded-full shadow-sm text-sm ">
-              Book Now
+              Booking Now
             </Button>
           </Link>
         )}

@@ -23,7 +23,6 @@ const MyBookingCard = ({ bookingCard }) => {
   const { facilityName, hours, status, timeSlot, totalPrice, _id, image } =
     bookingCard || {};
 
-
   const isValidImage = typeof image === "string" && image.trim() !== "";
 
   const defaultImage =
@@ -60,18 +59,16 @@ const MyBookingCard = ({ bookingCard }) => {
 
   const statusConfig = getStatusConfig(status);
 
-
   return (
     <Card
       shadow="none"
-      className="w-full bg-white border border-gray-100 hover:border-purple-100 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-purple-600/[0.02] transition-all duration-400 mb-5 group relative overflow-hidden"
+      className="w-full bg-white  border-gray-100 hover:border-purple-100 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-purple-600/[0.02] transition-all duration-400 mb-5 group relative overflow-hidden "
     >
       <div className="p-0">
         <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-transparent group-hover:bg-purple-600 transition-colors duration-300 z-20" />
 
         <div className="flex flex-col sm:flex-row items-center gap-6 p-5 sm:p-6 w-full">
-       
-          <div className="relative w-full sm:w-44 h-32 shrink-0 overflow-hidden rounded-2xl bg-gray-50 border border-gray-100">
+          <div className="relative w-full sm:w-44 h-32 shrink-0 overflow-hidden rounded-xl bg-gray-50 border border-gray-100">
             <Image
               src={isValidImage ? image : defaultImage}
               alt={facilityName || "Facility Image"}
@@ -80,7 +77,6 @@ const MyBookingCard = ({ bookingCard }) => {
               className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
 
-     
             {!isValidImage && (
               <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px] flex items-center justify-center text-white">
                 <div className="flex items-center gap-1 bg-black/60 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
@@ -120,7 +116,6 @@ const MyBookingCard = ({ bookingCard }) => {
           </div>
 
           <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 border-t sm:border-t-0 pt-4 sm:pt-0 border-gray-50 w-full sm:w-auto shrink-0">
- 
             <div className="sm:text-right">
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">
                 Total Amount
@@ -134,20 +129,17 @@ const MyBookingCard = ({ bookingCard }) => {
               </div>
             </div>
 
-         
             <div className="flex items-center sm:flex-col gap-2 w-full sm:w-auto">
-            
-              <Button
-                as={Link}
-                href={`/featureCartDetails/${_id}`}
-                size="sm"
-                variant="flat"
-                startcontent={<Eye size={12} />}
-                className="font-bold px-4 h-9 rounded-xl uppercase tracking-wider text-[10px] w-full bg-purple-50 hover:bg-purple-100 text-purple-700 transition-all cursor-pointer"
-              >
-                View
-              </Button>
-
+              <Link href={`/featureCartDetails/${_id}`}>
+                <Button
+                  size="sm"
+                  variant="flat"
+                  startcontent={<Eye size={12} />}
+                  className="font-bold px-4 h-9 rounded-xl uppercase tracking-wider text-[10px] w-full bg-purple-50 hover:bg-purple-100 text-purple-700 transition-all cursor-pointer"
+                >
+                  View
+                </Button>
+              </Link>
             </div>
             <BookingDelete id={_id}></BookingDelete>
           </div>
