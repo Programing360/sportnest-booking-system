@@ -4,7 +4,7 @@ import { bookingFacilities } from "@/lib/data";
 import { Button, Card, CardFooter, Chip } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   MapPin,
@@ -18,22 +18,24 @@ const FacilitiesCard = ({ facilities }) => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const [loading, setLoading] = useState(false);
-
+  const [today, setToday] = useState("");
   const { _id, name, image, description, pricePerHour, sportType, location } =
     facilities || {};
 
   const isValidImage = typeof image === "string" && image.trim() !== "";
 
+  useEffect(() => {
+    setToday(new Date().toISOString().split("T")[0]);
+  }, []);
   const handleBooking = async (e, feature) => {
     e.preventDefault();
 
     if (loading) return;
     setLoading(true);
 
-    const today = new Date().toISOString().split("T")[0];
-
     const bookingInfo = {
       userId: user?.id,
+      image: feature.image,
       facilityName: feature.name,
       bookingDate: today,
       timeSlot: "6:00 PM - 8:00 PM",
@@ -96,24 +98,19 @@ const FacilitiesCard = ({ facilities }) => {
             )}
           </div>
 
-      
           <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
             <div className="space-y-2">
-          
               <h2 className="text-xl font-black text-gray-900 tracking-tight line-clamp-1 group-hover:text-orange-500 transition-colors duration-300">
                 {name}
               </h2>
 
-             
               <p className="text-xs md:text-sm text-gray-400 font-medium line-clamp-2 leading-relaxed min-h-[40px]">
                 {description ||
                   "Experience premium sporting facilities with top-tier amenities and dynamic environment."}
               </p>
             </div>
 
-          
             <div className="pt-3 border-t border-gray-50 flex items-center justify-between gap-2">
-          
               <div className="flex items-center gap-1 text-gray-500 max-w-[60%]">
                 <MapPin size={14} className="text-rose-500 shrink-0" />
                 <span className="text-xs font-bold text-gray-600 truncate">
@@ -121,7 +118,6 @@ const FacilitiesCard = ({ facilities }) => {
                 </span>
               </div>
 
-              
               <div className="text-right shrink-0">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
                   Per Hour
@@ -135,7 +131,7 @@ const FacilitiesCard = ({ facilities }) => {
           </div>
         </Link>
 
-       <CardFooter className="p-5 pt-0 w-full shrink-0">
+        <CardFooter className="p-5 pt-0 w-full shrink-0">
           {user ? (
             <Button
               isLoading={loading}

@@ -18,6 +18,7 @@ const FeatureCard = ({ feature }) => {
   const handleBooking = async () => {
     const bookingInfo = {
       userId: user?.id,
+      image: feature.image,
       facilityName: feature.name,
       bookingDate: new Date(),
       timeSlot: "6pm - 8pm",

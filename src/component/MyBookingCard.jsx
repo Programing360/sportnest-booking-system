@@ -57,7 +57,7 @@ const MyBookingCard = ({ bookingCard, onCancelBooking }) => {
             <div className="flex items-center gap-3 flex-wrap">
             
               <Chip
-                startContent={statusConfig.icon}
+                startcontent={statusConfig.icon}
                 variant="flat"
                 className={`font-extrabold text-[10px] uppercase tracking-wider border px-2.5 h-7 ${statusConfig.class}`}
               >

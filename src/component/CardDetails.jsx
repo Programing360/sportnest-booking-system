@@ -26,6 +26,7 @@ const CardDetails = ({ featureCard }) => {
   const handleBooking = async () => {
     const bookingInfo = {
       userId: user?.id,
+      image:image,
       facilityName: name,
       bookingData: new Date(),
       totalPrice: pricePerHour,
