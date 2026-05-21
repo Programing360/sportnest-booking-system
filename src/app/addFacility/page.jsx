@@ -37,7 +37,7 @@ const AddFacility = () => {
       createAt: new Date(),
     };
 
-    const res = await fetch("http://localhost:5000/facilities", {
+    const res = await fetch("https://sportnext-booking-server.vercel.app/facilities", {
       method: "POST",
       headers: {
         "content-type": "application/json",

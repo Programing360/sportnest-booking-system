@@ -3,25 +3,25 @@ import { headers } from "next/headers";
 import { auth } from "./auth";
 
 export const allFeatureData = async () => {
-  const data = await fetch("http://localhost:5000/facilities");
+  const data = await fetch("https://sportnext-booking-server.vercel.app/facilities");
   return data.json();
 };
 
 export const featureCardDetails = async (id) => {
-  const data = await fetch(`http://localhost:5000/facilities/${id}`);
+  const data = await fetch(`https://sportnext-booking-server.vercel.app/facilities/${id}`);
   return data.json();
 };
 
 export const deleteFaclities = async (id) => {
 
-  const res = await fetch(`http://localhost:5000/deleteFacilities/${id}`, {
+  const res = await fetch(`https://sportnext-booking-server.vercel.app/deleteFacilities/${id}`, {
     method: "DELETE",
   });
   return res.json();
 };
 
 export const bookingFacilities = async (bookingData) => {
-  const res = await fetch("http://localhost:5000/bookings", {
+  const res = await fetch("https://sportnext-booking-server.vercel.app/bookings", {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -37,7 +37,7 @@ export const myBookingFacilities = async (userId) => {
     headers: await headers(),
   });
 
-  const res = await fetch(`http://localhost:5000/bookings/${userId}`, {
+  const res = await fetch(`https://sportnext-booking-server.vercel.app/bookings/${userId}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -50,7 +50,7 @@ export const cancelBookingFacilities = async (id) => {
     headers: await headers(),
   });
 
-  const res = await fetch(`http://localhost:5000/cancelBooking/${id}`, {
+  const res = await fetch(`https://sportnext-booking-server.vercel.app/cancelBooking/${id}`, {
     method: "DELETE",
     headers: {
       authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export const cancelBookingFacilities = async (id) => {
 };
 
 export const updateFacilities = async (formData, id) => {
-  const res = await fetch(`http://localhost:5000/updateFacilities/${id}`, {
+  const res = await fetch(`https://sportnext-booking-server.vercel.app/updateFacilities/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
