@@ -6,7 +6,7 @@ import { FaHome, FaArrowLeft } from "react-icons/fa";
 
 const NotFoundPage = () => {
     return (
-        <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 flex items-center justify-center p-4 sm:p-6 lg:p-8 select-none">
+        <div className="min-h-screen w-full bg-linear-to-br from-slate-50 via-slate-100 to-slate-200 flex items-center justify-center p-4 sm:p-6 lg:p-8 select-none">
             
             {/* Main Interactive Container Card */}
             <Card className="w-full max-w-2xl bg-white/80 backdrop-blur-md border border-slate-200/60 shadow-2xl rounded-3xl p-4 sm:p-8 text-center overflow-hidden relative">
@@ -19,7 +19,7 @@ const NotFoundPage = () => {
                     
                     {/* Thematic Big 404 Section */}
                     <div className="relative">
-                        <h1 className="text-8xl sm:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#163962] to-[#122e50] leading-none drop-shadow-sm">
+                        <h1 className="text-8xl sm:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-linear-to-b from-[#163962] to-[#122e50] leading-none drop-shadow-sm">
                             404
                         </h1>
                         {/* Bouncing sport badge over the text */}

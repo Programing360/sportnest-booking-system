@@ -15,7 +15,7 @@ import {
   Trash2,
   ImageOff,
 } from "lucide-react";
-import { cancelBookingFacilities } from "@/lib/data";
+
 import { toast } from "react-toastify";
 import BookingDelete from "./shered/BookingDelete";
 
@@ -23,9 +23,9 @@ const MyBookingCard = ({ bookingCard }) => {
   const { facilityName, hours, status, timeSlot, totalPrice, _id, image } =
     bookingCard || {};
 
-  // ইমেজ ফাঁকা বা ইনভ্যালিড থাকলে চেক করার লজিক
+
   const isValidImage = typeof image === "string" && image.trim() !== "";
-  // আপনার ডোমেইনের কোনো ডিফল্ট ইমেজের পাথ অথবা নিচের ডামি স্পোর্টস প্লেসহোল্ডার ইমেজ
+
   const defaultImage =
     "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=500&auto=format&fit=crop";
 
@@ -59,7 +59,7 @@ const MyBookingCard = ({ bookingCard }) => {
   };
 
   const statusConfig = getStatusConfig(status);
-//   const isCancelled = status?.toLowerCase() === "cancelled";
+
 
   return (
     <Card
@@ -70,7 +70,7 @@ const MyBookingCard = ({ bookingCard }) => {
         <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-transparent group-hover:bg-purple-600 transition-colors duration-300 z-20" />
 
         <div className="flex flex-col sm:flex-row items-center gap-6 p-5 sm:p-6 w-full">
-          {/* ১. ইমেজ এরিয়া (ডিফল্ট ফলব্যাক মেকানিজম সহ) */}
+       
           <div className="relative w-full sm:w-44 h-32 shrink-0 overflow-hidden rounded-2xl bg-gray-50 border border-gray-100">
             <Image
               src={isValidImage ? image : defaultImage}
@@ -80,7 +80,7 @@ const MyBookingCard = ({ bookingCard }) => {
               className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
 
-            {/* যদি ইমেজ ডাটাবেজে না থাকে তবে ছোট্ট একটি নোটিফিকেশন ব্যাজ (ঐচ্ছিক) */}
+     
             {!isValidImage && (
               <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px] flex items-center justify-center text-white">
                 <div className="flex items-center gap-1 bg-black/60 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
@@ -91,7 +91,6 @@ const MyBookingCard = ({ bookingCard }) => {
             )}
           </div>
 
-          {/* ২. কন্টেন্ট এবং মিডল টেক্সট ইনফো */}
           <div className="space-y-3 flex-1 w-full text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start gap-3 flex-wrap">
               <Chip
@@ -120,9 +119,8 @@ const MyBookingCard = ({ bookingCard }) => {
             </div>
           </div>
 
-          {/* ৩. ডান পাশের প্রাইস এবং নতুন অ্যাকশন বাটনস প্যানেল */}
           <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 border-t sm:border-t-0 pt-4 sm:pt-0 border-gray-50 w-full sm:w-auto shrink-0">
-            {/* প্রাইস সেকশন */}
+ 
             <div className="sm:text-right">
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">
                 Total Amount
@@ -136,12 +134,12 @@ const MyBookingCard = ({ bookingCard }) => {
               </div>
             </div>
 
-            {/* বাটন গ্রুপ: View Details এবং Cancel Booking */}
+         
             <div className="flex items-center sm:flex-col gap-2 w-full sm:w-auto">
-              {/* নতুন View Details বাটন */}
+            
               <Button
                 as={Link}
-                href={`/facilitiesCartDetails/${_id}`}
+                href={`/featureCartDetails/${_id}`}
                 size="sm"
                 variant="flat"
                 startcontent={<Eye size={12} />}
@@ -150,7 +148,6 @@ const MyBookingCard = ({ bookingCard }) => {
                 View
               </Button>
 
-              {/* ক্যানসেল/ডিলিট বাটন */}
             </div>
             <BookingDelete id={_id}></BookingDelete>
           </div>

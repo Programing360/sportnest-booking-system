@@ -17,6 +17,7 @@ import {
 const FacilitiesCard = ({ facilities }) => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
+
   const [loading, setLoading] = useState(false);
   const [today, setToday] = useState("");
   const { _id, name, image, description, pricePerHour, sportType, location } =
@@ -26,15 +27,16 @@ const FacilitiesCard = ({ facilities }) => {
 
   useEffect(() => {
     setToday(new Date().toISOString().split("T")[0]);
-  }, []);
-  const handleBooking = async (e, feature) => {
-    e.preventDefault();
+  }, [setToday]);
 
-    if (loading) return;
+  const handleBooking = async (feature) => {
+    
     setLoading(true);
-
+    
     const bookingInfo = {
+      facility_id: _id,
       userId: user?.id,
+      userEmail: user?.email,
       image: feature.image,
       facilityName: feature.name,
       bookingDate: today,
@@ -46,6 +48,7 @@ const FacilitiesCard = ({ facilities }) => {
 
     try {
       const res = await bookingFacilities(bookingInfo);
+      // console.log(bookingInfo);
       if (res?.insertedId) {
         toast.success("🎯 Booking Successful! Check My Bookings.");
       } else {
@@ -63,7 +66,7 @@ const FacilitiesCard = ({ facilities }) => {
       <Card className="w-full h-full border border-gray-100 hover:border-orange-100 shadow-sm hover:shadow-xl hover:shadow-orange-500/[0.03] transition-all duration-500 rounded-[2.5rem] overflow-hidden bg-white flex flex-col justify-between group relative">
         {/* Detail Page Link wrapper */}
         <Link
-          href={`/facilitiesCartDetails/${_id}`}
+          href={`/featureCartDetails/${_id}`}
           className="flex-1 flex flex-col"
         >
           <div className="relative w-full h-52 md:h-56 overflow-hidden bg-gray-50 shrink-0">
@@ -135,10 +138,10 @@ const FacilitiesCard = ({ facilities }) => {
           {user ? (
             <Button
               isLoading={loading}
-              onClick={(e) => handleBooking(e, facilities)}
+              onClick={() => handleBooking(facilities)}
               className="w-full bg-slate-800 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider h-12 rounded-2xl shadow-lg shadow-orange-500/10 active:scale-95 transition-all cursor-pointer"
             >
-              Book Slot Now
+              Booking Now
             </Button>
           ) : (
             <Link className="w-full" href="/login">

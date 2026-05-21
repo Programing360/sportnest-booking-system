@@ -11,13 +11,15 @@ import { toast } from "react-toastify";
 const FeatureCard = ({ feature }) => {
   const { data: session } = authClient.useSession();
   const imageSrc = feature?.image || feature?.img;
-
+  
   const isValidImage = typeof imageSrc === "string" && imageSrc.trim() !== "";
   const user = session?.user;
 
   const handleBooking = async () => {
     const bookingInfo = {
+      facility_id: _id,
       userId: user?.id,
+      userEmail: user?.email,
       image: feature.image,
       facilityName: feature.name,
       bookingDate: new Date(),

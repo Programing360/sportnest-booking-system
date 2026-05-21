@@ -12,6 +12,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { Check } from "@gravity-ui/icons";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { AddFacilityFeature } from "@/lib/data";
 
 const AddFacility = () => {
   const { data: session } = authClient.useSession();
@@ -23,7 +24,7 @@ const AddFacility = () => {
     const data = new FormData(e.target);
     const facilitiesData = Object.fromEntries(data.entries());
 
-    const allInfo = {
+    const allFeatureInfo = {
       ownerEmail: user?.email,
       name: facilitiesData.name,
       sportType: facilitiesData.sportType,
@@ -37,16 +38,10 @@ const AddFacility = () => {
       createAt: new Date(),
     };
 
-    const res = await fetch("https://sportnext-booking-server.vercel.app/facilities", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(allInfo),
-    });
-    const result = await res.json();
+    const res = await AddFacilityFeature(allFeatureInfo)
+   
 
-    if (result.insertedId) {
+    if (res.insertedId) {
       toast.success("Facility Added Successfully!");
     } else {
       toast.error("Failed toAdd Facility!");

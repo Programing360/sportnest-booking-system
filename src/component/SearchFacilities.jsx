@@ -41,10 +41,9 @@ const SearchFacilities = ({ featureData = [] }) => {
           All Facilities
         </h1>
         
-        {/* Filter Group Container */}
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto items-center">
           
-          {/* Search Input Box */}
+     
           <SearchField name="search" className="w-full sm:w-auto">
             <SearchField.Group className="relative flex items-center w-full sm:w-[320px] md:w-[360px] group">
               <SearchField.SearchIcon className="absolute left-4 text-gray-400 group-focus-within:text-purple-600 transition-colors z-10" />
@@ -100,7 +99,7 @@ const SearchFacilities = ({ featureData = [] }) => {
         </div>
       </div>
 
-      {/* Grid Container */}
+      
       {filterData.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
           {filterData.map((feature) => (
@@ -108,7 +107,7 @@ const SearchFacilities = ({ featureData = [] }) => {
           ))}
         </div>
       ) : (
-        /* Empty State */
+       
         <div className="text-center py-20 bg-gray-50/50 rounded-[2rem] border border-dashed border-gray-200 max-w-md mx-auto px-6 mt-10">
           <p className="text-gray-400 font-bold text-lg mb-1">
             No Facilities Found
@@ -120,7 +119,7 @@ const SearchFacilities = ({ featureData = [] }) => {
             <button
               onClick={() => {
                 setSearchText("");
-                setSelectedSport(""); // এক ক্লিকে রিসেট
+                setSelectedSport("");
               }}
               className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-xl text-xs font-bold uppercase transition-transform active:scale-95 cursor-pointer"
             >

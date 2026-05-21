@@ -9,12 +9,12 @@ import { IoIosFootball } from "react-icons/io";
 import NavLink from "./shered/NavLink";
 
 const Navber = () => {
-  const [isOpen, setIsOpen] = useState(!true);
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const route = useRouter();
   const userInitialName = user?.name ? user.name.charAt(0).toUpperCase() : "U";
 
+  console.log(user);
 
   const handleLogOut = async () => {
     await authClient.signOut({

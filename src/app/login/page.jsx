@@ -92,7 +92,7 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-slate-100 to-[#163962]/10 px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-slate-100 to-[#163962]/10 px-4 py-12">
       <Card className="max-w-2xl mx-auto border border-slate-200/60 shadow-2xl rounded-3xl bg-white/80 backdrop-blur-md p-2 md:p-4">
         <div className="flex flex-col items-center w-90">
           <div className="text-center space-y-2 mt-4">
@@ -157,7 +157,7 @@ const LoginPage = () => {
               </Button>
             </div>
             <div className="text-center text-xs md:text-sm text-gray-500 mt-2 mb-2">
-              Don't have an account? please
+               Don't have an account? please
               <Link
                 href="/signUp"
                 className="text-[#163962] font-bold hover:underline"
@@ -171,7 +171,7 @@ const LoginPage = () => {
               variant="tertiary"
             >
               <FaGoogle icon="devicon:google" />
-              <span>Sign in with Google</span>
+              <span className="dark:text-black">Sign in with Google</span>
             </Button>
           </Form>
         </div>

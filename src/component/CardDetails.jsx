@@ -11,9 +11,10 @@ import { toast } from "react-toastify";
 
 const CardDetails = ({ featureCard }) => {
   const { data: session } = authClient.useSession();
-  
+
   const user = session?.user;
   const {
+    _id,
     image,
     name,
     location,
@@ -25,8 +26,10 @@ const CardDetails = ({ featureCard }) => {
 
   const handleBooking = async () => {
     const bookingInfo = {
+      facility_id: _id,
       userId: user?.id,
-      image:image,
+      userEmail: user?.email,
+      image: image,
       facilityName: name,
       bookingData: new Date(),
       totalPrice: pricePerHour,
@@ -34,20 +37,21 @@ const CardDetails = ({ featureCard }) => {
       hours: 2,
     };
     const res = await bookingFacilities(bookingInfo);
+
     if (res.insertedId) {
       toast.success("Booking Successful");
     } else {
       toast.error("Booking Failed");
     }
   };
-
+  
   return (
     <div className="container mx-auto mt-20">
       <Card className="w-full ">
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
           <div className="max-h-[500px]">
             <Image
-              src={image}
+              src={featureCard?.image}
               alt=""
               width={600}
               height={700}
@@ -129,7 +133,7 @@ const CardDetails = ({ featureCard }) => {
                     <p>
                       <span className="text-3xl font-bold text-[#163962]">
                         ৳{pricePerHour}
-                      </span>{" "}
+                      </span>
                       / per hour
                     </p>
                   </div>
@@ -139,13 +143,11 @@ const CardDetails = ({ featureCard }) => {
                         onClick={handleBooking}
                         className="w-full active:scale-95 bg-[#163962]"
                       >
-                        Instant Book Now
+                        Booking Now
                       </Button>
                     ) : (
-                      <Link href={'/login'}>
-                        <Button
-                          className="w-full active:scale-95 bg-[#163962]"
-                        >
+                      <Link href={"/login"}>
+                        <Button className="w-full active:scale-95 bg-[#163962]">
                           Instant Book Now
                         </Button>
                       </Link>
