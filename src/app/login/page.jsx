@@ -15,7 +15,7 @@ import {
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { Slide, toast } from "react-toastify";
-import { IconBase } from "react-icons";
+
 import { FaGoogle } from "react-icons/fa";
 import { redirect } from "next/navigation";
 const LoginPage = () => {
@@ -25,7 +25,7 @@ const LoginPage = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
-    console.log(user);
+   
     const { data, error } = await authClient.signIn.email({
       email: user.email, // required
       password: user.password,
@@ -58,7 +58,7 @@ const LoginPage = () => {
       });
       redirect('/signUp')
     }
-    console.log(error);
+   
   };
   const handleSocialLogin = async () => {
     const data = await authClient.signIn.social({
@@ -90,7 +90,6 @@ const LoginPage = () => {
         transition: Slide,
       });
     }
-    console.log(data);
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-slate-100 to-[#163962]/10 px-4 py-12">

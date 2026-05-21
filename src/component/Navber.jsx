@@ -14,7 +14,7 @@ const Navber = () => {
   const user = session?.user;
   const route = useRouter();
   const userInitialName = user?.name ? user.name.charAt(0).toUpperCase() : "U";
-  console.log(user);
+
 
   const handleLogOut = async () => {
     await authClient.signOut({

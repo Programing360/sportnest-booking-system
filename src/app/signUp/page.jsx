@@ -57,7 +57,7 @@ const SignUpPage = () => {
       });
     }
 
-    console.log(user, data);
+   
   };
   return (
     <div className="min-h-screen">

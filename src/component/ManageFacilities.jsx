@@ -13,30 +13,29 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { deleteFaclities } from "@/lib/data";
-import { CgKey } from "react-icons/cg";
 
 const ManageFacilities = ({ ownerFacilities = [] }) => {
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  console.log(ownerFacilities);
+ 
 
-  // ডিলিট বাটন ক্লিক করলে daisyUI মডাল ট্রিগার হবে
+
   const handleOpenDeleteModal = (facility) => {
     setSelectedFacility(facility);
-    console.log(facility);
-    // HTML Dialog ওপেন করার ন্যাটিভ মেথড
+   
+  
     document.getElementById("delete_confirmation_modal").showModal();
   };
 
-  // মডাল ক্লোজ করার ফাংশন
+
   const handleCloseModal = () => {
     document.getElementById("delete_confirmation_modal").close();
   };
 
-  // কনফার্ম করার পর ডিলিট লজিক
+
   const handleConfirmDelete = async (id) => {
-    // console.log('hello',id);
+  
     if (!selectedFacility?._id) return;
 
     setIsDeleting(false);
@@ -60,7 +59,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
   return (
     <div>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 antialiased">
-        {/* --- ১. হেডার কন্ট্রোল প্যানেল --- */}
+        
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
             <h1 className="text-2xl md:text-4xl font-black text-gray-900 tracking-tight">
@@ -72,7 +71,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
             </p>
           </div>
 
-          {/* daisyUI বোতাম স্টাইল ব্যবহার করে নতুন ফ্যাসিলিটি অ্যাড */}
+       
           <Link href="/dashboard/add-facility" className="w-full sm:w-auto">
             <button className="btn btn-md bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs uppercase tracking-wider px-5 h-12 rounded-2xl border-none shadow-lg shadow-purple-600/10 flex items-center gap-2 w-full justify-center active:scale-95 transition-transform">
               <Plus size={16} />
@@ -81,11 +80,11 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
           </Link>
         </div>
 
-        {/* --- ২. মেইন ডাটা টেবিল (daisyUI Table Component) --- */}
+        
         {ownerFacilities.length > 0 ? (
           <div className="overflow-x-auto border border-gray-100 rounded-[2rem] bg-white shadow-sm">
             <table className="table w-full text-left border-collapse">
-              {/* টেবিল হেডার */}
+             
               <thead>
                 <tr className="bg-gray-50/80 border-b border-gray-100">
                   <th className="font-bold text-gray-500 text-xs uppercase tracking-wider py-4 pl-6">
@@ -103,7 +102,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
                 </tr>
               </thead>
 
-              {/* টেবিল বডি */}
+        
               <tbody>
                 {ownerFacilities.map((facility) => {
                   const isValidImage =
@@ -115,7 +114,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
                       key={facility._id}
                       className="border-b border-gray-50 hover:bg-purple-50/[0.02] transition-colors"
                     >
-                      {/* কলাম ১: ইমেজ, নাম এবং লোকেশন */}
+                     
                       <td className="py-4 pl-6">
                         <div className="flex items-center gap-4">
                           <div className="relative w-16 h-12 rounded-xl overflow-hidden bg-gray-50 shrink-0 border border-gray-100">
@@ -149,28 +148,28 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
                         </div>
                       </td>
 
-                      {/* কলাম ২: স্পোর্টস টাইপ (daisyUI Badge) */}
+                      
                       <td className="py-4">
                         <span className="badge py-3 bg-purple-50 text-purple-700 border border-purple-100/50 font-bold text-[10px] uppercase tracking-wide rounded-xl">
                           {facility.sportType || "General"}
                         </span>
                       </td>
 
-                      {/* কলাম ৩: আওয়ার্লি রেট */}
+                    
                       <td className="py-4 font-mono font-bold text-gray-900 text-sm md:text-base">
                         ${facility.pricePerHour || 0}
                       </td>
 
-                      {/* কলাম ৪: অ্যাকশন বাটনস (daisyUI Tooltip ও Buttons) */}
+                   
                       <td className="py-4 text-center pr-6">
                         <div className="flex items-center justify-center gap-2">
-                          {/* আপডেট বাটন */}
+                        
                           <div
                             className="tooltip font-bold text-xs"
                             data-tip="Edit Facility"
                           >
                             <Link
-                              href={`/dashboard/manage-facilities/edit/${facility._id}`}
+                              href={`/manageFacilities/edit/${facility._id}`}
                             >
                               <button className="btn btn-sm btn-square bg-blue-50 text-blue-600 hover:bg-blue-100 border-none rounded-xl">
                                 <Edit3 size={15} />
@@ -178,7 +177,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
                             </Link>
                           </div>
 
-                          {/* ডিলিট বাটন */}
+                         
                           <div
                             className="tooltip font-bold text-xs tooltip-error"
                             data-tip="Delete Facility"
@@ -199,7 +198,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
             </table>
           </div>
         ) : (
-          /* খালি থাকলে এম্পটি স্টেট */
+      
           <div className="text-center py-16 bg-gray-50/50 rounded-[2.5rem] border border-dashed border-gray-200 max-w-md mx-auto px-6">
             <p className="text-gray-400 font-bold text-lg mb-1">
               No Facilities Registered
@@ -210,13 +209,13 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
           </div>
         )}
 
-        {/* --- ৩. পিওর daisyUI HTML Dialog Modal (Backdrop Blur সহ) --- */}
+   
         <dialog
           id="delete_confirmation_modal"
           className="modal modal-bottom sm:modal-middle backdrop-blur-md"
         >
           <div className="modal-box bg-white max-w-md rounded-[2.5rem] border border-gray-100 shadow-2xl p-6">
-            {/* হেডার পার্ট */}
+    
             <div className="flex items-center gap-3 text-gray-900 font-black text-xl tracking-tight mb-4">
               <div className="w-10 h-10 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center border border-rose-100/50 shrink-0">
                 <AlertTriangle size={20} className="stroke-[2.5]" />
@@ -224,7 +223,6 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
               <span>Confirm Deletion</span>
             </div>
 
-            {/* মডাল ডেসক্রিপশন */}
             <p className="text-sm text-gray-500 font-medium leading-relaxed">
               Are you absolutely sure you want to permanently delete{" "}
               <strong className="text-gray-900 font-bold">
@@ -234,7 +232,6 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
               automatically dropped.
             </p>
 
-            {/* কন্ট্রোল বাটন গ্রুপ */}
             <div className="modal-action gap-2 mt-6">
               <button
                 type="button"
@@ -257,8 +254,6 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
               </button>
             </div>
           </div>
-
-          {/* মডালের বাইরে ক্লিক করলে অটোমেটিক ক্লোজ হওয়ার টেকনিক */}
           <form method="dialog" className="modal-backdrop">
             <button onClick={handleCloseModal}>close</button>
           </form>

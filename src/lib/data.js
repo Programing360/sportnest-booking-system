@@ -13,9 +13,9 @@ export const featureCardDetails = async (id) => {
 };
 
 export const deleteFaclities = async (id) => {
-  console.log(id);
-  const res = await fetch(`http://localhost:5000/deleteFacilities/${id}`,{
-    method:"DELETE",
+
+  const res = await fetch(`http://localhost:5000/deleteFacilities/${id}`, {
+    method: "DELETE",
   });
   return res.json();
 };
@@ -57,4 +57,14 @@ export const cancelBookingFacilities = async (id) => {
     },
   });
   return res.json();
+};
+
+export const updateFacilities = async (formData, id) => {
+  const res = await fetch(`http://localhost:5000/updateFacilities/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  });
+  const result = await res.json();
+  return result
 };
