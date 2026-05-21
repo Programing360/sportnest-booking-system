@@ -129,7 +129,7 @@ const LoginPage = () => {
               <Label>Password</Label>
               <InputGroup>
                 <InputGroup.Input
-                  className="w-full "
+                  className="w-full rounded-xl"
                   type={isVisible ? "text" : "password"}
                   placeholder="Enter your password"
                 />

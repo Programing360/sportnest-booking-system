@@ -5,27 +5,29 @@ import { Button, Card } from "@heroui/react";
 import { ImageOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import React from "react";
 import { toast } from "react-toastify";
 
 const FeatureCard = ({ feature }) => {
   const { data: session } = authClient.useSession();
   const imageSrc = feature?.image || feature?.img;
-  const [today, setToday] = useState("");
-  const isValidImage = typeof imageSrc === "string" && imageSrc.trim() !== "";
-  const user = session?.user;
 
-  useEffect(() => {
-    setToday(new Date().toISOString().split("T")[0]);
-  }, [setToday]);
+  const isValidImage = typeof imageSrc === "string" && imageSrc.trim() !== "";
+  const userData = session?.user;
 
   const handleBooking = async () => {
+    if (!userData) {
+      return redirect("/login");
+    }
 
-    const myBooking = await myBookingFacilities(user.id)
-    const matchBooking = myBooking.find(item => item.facility_id === feature._id)
+    const myBooking = await myBookingFacilities(user.id);
+    const matchBooking = myBooking.find(
+      (item) => item.facility_id === feature._id,
+    );
 
-    if(matchBooking){
-      return toast.success('Already add your Choice Item')
+    if (matchBooking) {
+      return toast.success("Already add your Choice Item");
     }
 
     const bookingInfo = {
@@ -34,12 +36,11 @@ const FeatureCard = ({ feature }) => {
       userEmail: user?.email,
       image: feature.image,
       facilityName: feature.name,
-      bookingDate: today,
+      bookingDate: new Date(),
       timeSlot: "6pm - 8pm",
       hours: 2,
       totalPrice: feature.pricePerHour,
     };
-
 
     const res = await bookingFacilities(bookingInfo);
     if (res.insertedId) {
@@ -56,7 +57,7 @@ const FeatureCard = ({ feature }) => {
           <figure>
             {isValidImage ? (
               <Image
-                src={feature?.image}
+                src={imageSrc}
                 alt={feature?.name || "Facility Image"}
                 width={400}
                 height={400}
@@ -76,7 +77,7 @@ const FeatureCard = ({ feature }) => {
             <p>{feature.description}</p>
           </div>
         </Link>
-        {user ? (
+        {userData ? (
           <Button
             onClick={handleBooking}
             className="btn w-full bg-[#163962] text-white hover:scale-105 transition-all duration-200 active:scale-95 font-medium rounded-full shadow-sm text-sm "
