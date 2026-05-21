@@ -26,12 +26,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={`${poppins.variable} ${inter.variable} h-full antialiased`}
     >
+      
       <body className="">
         <Navber></Navber>
         {children}
@@ -49,6 +51,7 @@ export default function RootLayout({ children }) {
           theme="light"
           transition={Slide}
         />
+        
       </body>
     </html>
   );
