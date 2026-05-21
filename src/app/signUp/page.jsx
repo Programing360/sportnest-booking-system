@@ -17,6 +17,7 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { Slide, toast } from "react-toastify";
 import { redirect } from "next/navigation";
+import { FaGoogle } from "react-icons/fa";
 const SignUpPage = () => {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +43,7 @@ const SignUpPage = () => {
         theme: "light",
         transition: Slide,
       });
-      redirect('/login')
+      redirect("/login");
     } else {
       toast.warn(`${error?.message}`, {
         position: "top-center",
@@ -56,9 +57,40 @@ const SignUpPage = () => {
         transition: Slide,
       });
     }
-
-   
   };
+
+  const handleSocialLogin = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+    if (data) {
+      toast.success("User Login Successful", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
+    } else {
+      toast.warn("Something is Wrong! Try Again.", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <div className="flex-1 bg-slate-50 flex items-center justify-center p-4 sm:p-8 md:p-12 min-h-screen  ">
@@ -75,7 +107,7 @@ const SignUpPage = () => {
               Create Your Account
             </h1>
           </div>
-            {/* form data collect from user */}
+          {/* form data collect from user */}
           <Form
             className="flex flex-col gap-4 w-full"
             onSubmit={handleSignUpSubmit}
@@ -134,7 +166,6 @@ const SignUpPage = () => {
               <FieldError className="text-xs text-danger-500 mt-1 font-medium" />
             </TextField>
             <TextField
-              
               name="url"
               className="w-full"
               type="url"
@@ -219,6 +250,14 @@ const SignUpPage = () => {
                 Login
               </Link>
             </div>
+            <Button
+              onClick={handleSocialLogin}
+              className="w-full mt-7"
+              variant="tertiary"
+            >
+              <FaGoogle icon="devicon:google" />
+              <span className="dark:text-black">Sign in with Google</span>
+            </Button>
           </Form>
         </div>
       </div>

@@ -72,7 +72,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
           </div>
 
        
-          <Link href="/dashboard/add-facility" className="w-full sm:w-auto">
+          <Link href="/addFacility" className="w-full sm:w-auto">
             <button className="btn btn-md bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs uppercase tracking-wider px-5 h-12 rounded-2xl border-none shadow-lg shadow-purple-600/10 flex items-center gap-2 w-full justify-center active:scale-95 transition-transform">
               <Plus size={16} />
               <span>Add New Facility</span>

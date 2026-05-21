@@ -78,7 +78,7 @@ const EditFacilityForm = ({ facilityData, id }) => {
             <span>Edit Facility Details</span>
           </h1>
           <p className="text-xs md:text-sm text-gray-400 font-medium mt-1">
-            Modifying parameters for ID:{" "}
+            Modifying parameters for ID:
             <span className="font-mono text-purple-600 font-bold">{id}</span>
           </p>
         </div>
