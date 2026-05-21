@@ -25,8 +25,6 @@ const MyBookingCard = ({ bookingCard }) => {
 
   const isValidImage = typeof image === "string" && image.trim() !== "";
 
-  const defaultImage =
-    "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=500&auto=format&fit=crop";
 
   const getStatusConfig = (statusText) => {
     switch (statusText?.toLowerCase()) {
@@ -70,8 +68,8 @@ const MyBookingCard = ({ bookingCard }) => {
         <div className="flex flex-col sm:flex-row items-center gap-6 p-5 sm:p-6 w-full">
           <div className="relative w-full sm:w-44 h-32 shrink-0 overflow-hidden rounded-xl bg-gray-50 border border-gray-100">
             <Image
-              src={isValidImage ? image : defaultImage}
-              alt={facilityName || "Facility Image"}
+              src={image}
+              alt={facilityName}
               fill
               sizes="(max-width: 640px) 100vw, 200px"
               className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"

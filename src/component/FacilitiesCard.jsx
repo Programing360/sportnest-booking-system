@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
-import { bookingFacilities } from "@/lib/data";
+import { bookingFacilities, myBookingFacilities } from "@/lib/data";
 import { Button, Card, CardFooter, Chip } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,9 +30,17 @@ const FacilitiesCard = ({ facilities }) => {
   }, [setToday]);
 
   const handleBooking = async (feature) => {
-    
     setLoading(true);
-    
+
+    const myBooking = await myBookingFacilities(user.id);
+    const matchBooking = myBooking.find(
+      (item) => item.facility_id === feature._id,
+    );
+
+    if (matchBooking) {
+      return toast.warn("Already add your Choice Item");
+    }
+
     const bookingInfo = {
       facility_id: _id,
       userId: user?.id,

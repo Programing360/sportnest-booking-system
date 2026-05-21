@@ -4,13 +4,18 @@ import { bookingFacilities } from "@/lib/data";
 import { Button, Card } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaCheckCircle, FaClock, FaStar, FaUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { toast } from "react-toastify";
 
 const CardDetails = ({ featureCard }) => {
   const { data: session } = authClient.useSession();
+const [today, setToday] = useState("");
+
+useEffect(() => {
+    setToday(new Date().toISOString().split("T")[0]);
+  }, [setToday]);
 
   const user = session?.user;
   const {
@@ -31,7 +36,7 @@ const CardDetails = ({ featureCard }) => {
       userEmail: user?.email,
       image: image,
       facilityName: name,
-      bookingData: new Date(),
+      bookingData: today,
       totalPrice: pricePerHour,
       timeSlot: "6pm - 8pm",
       hours: 2,

@@ -9,7 +9,7 @@ const SearchFacilities = ({ featureData = [] }) => {
   const [searchText, setSearchText] = useState("");
   const [filterData, setFilterData] = useState(featureData);
 
-  const [selectedSport, setSelectedSport] = useState("");
+  const [selectedSport, setSelectedSport] = useState("All");
 
   const uniqueSportTypes = Array.from(
     new Set(featureData.map((item) => item.sportType).filter(Boolean)),
@@ -27,27 +27,22 @@ const SearchFacilities = ({ featureData = [] }) => {
       );
     }
 
-    if (selectedSport !== "") {
-      updatedData = featureData.filter(
+    if (sortValue && sortValue.toLowerCase() !== "all") {
+      updatedData = updatedData.filter(
         (item) => item.sportType?.toLowerCase() === sortValue.toLowerCase(),
       );
     }
 
-    setFilterData(updatedData)
-
+    setFilterData(updatedData);
   };
 
-   const handleFilterAndSearch = () => {
+  const handleFilterAndSearch = () => {
     applyFilter(searchText, selectedSport);
   };
 
   const handleFilterByType = (e) => {
-
-    const value = e.target.value
-
+    const value = e.target.value;
     setSelectedSport(value);
-
-  
 
     applyFilter(searchText, value);
   };
@@ -97,7 +92,7 @@ const SearchFacilities = ({ featureData = [] }) => {
               onChange={(e) => handleFilterByType(e)}
               className="w-full pl-10 pr-10 py-3.5 bg-gray-50/70 hover:bg-gray-100/50 border border-gray-200 rounded-2xl outline-none focus:border-orange-500 focus:bg-white text-sm font-semibold text-gray-700 shadow-sm appearance-none cursor-pointer transition-all"
             >
-              <option value="">All Sports</option>
+              <option value="All">All Sports</option>
               {uniqueSportTypes.map((sportType) => (
                 <option key={sportType} value={sportType}>
                   {sportType}
@@ -131,7 +126,8 @@ const SearchFacilities = ({ featureData = [] }) => {
             <button
               onClick={() => {
                 setSearchText("");
-                setSelectedSport("");
+                setSelectedSport("All");
+                setFilterData(featureData);
               }}
               className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-xl text-xs font-bold uppercase transition-transform active:scale-95 cursor-pointer"
             >

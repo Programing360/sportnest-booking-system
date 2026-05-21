@@ -5,15 +5,19 @@ import { Button, Card } from "@heroui/react";
 import { ImageOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const FeatureCard = ({ feature }) => {
   const { data: session } = authClient.useSession();
   const imageSrc = feature?.image || feature?.img;
-  
+  const [today, setToday] = useState("");
   const isValidImage = typeof imageSrc === "string" && imageSrc.trim() !== "";
   const user = session?.user;
+
+  useEffect(() => {
+    setToday(new Date().toISOString().split("T")[0]);
+  }, [setToday]);
 
   const handleBooking = async () => {
 
@@ -30,7 +34,7 @@ const FeatureCard = ({ feature }) => {
       userEmail: user?.email,
       image: feature.image,
       facilityName: feature.name,
-      bookingDate: new Date(),
+      bookingDate: today,
       timeSlot: "6pm - 8pm",
       hours: 2,
       totalPrice: feature.pricePerHour,
