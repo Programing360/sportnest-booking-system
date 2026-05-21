@@ -1,11 +1,18 @@
-import React from 'react';
+import React from "react";
+import ManageFacilities from "@/component/ManageFacilities";
+import { allFeatureData } from "@/lib/data";
 
-const page = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+// ধরে নিচ্ছি এই ফাংশনটি আপনার data.js বা অ্যাকশন ফাইলে আছে
+
+const ManageFacilitiesPage = async () => {
+
+    const allFacilitiesData = await allFeatureData()
+
+  return (
+    <div>
+      <ManageFacilities ownerFacilities={allFacilitiesData}></ManageFacilities>
+    </div>
+  );
 };
 
-export default page;
+export default ManageFacilitiesPage;
