@@ -60,7 +60,7 @@ const FeatureCard = ({ feature }) => {
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         className=""
       >
-        <Card className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-4xl ">
+        <Card className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-4xl dark:text-black">
           <Link href={`/featureCartDetails/${feature._id}`}>
             <figure>
               {isValidImage ? (
