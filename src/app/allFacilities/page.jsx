@@ -6,6 +6,7 @@ import React from "react";
 
 const FacilitiesPage = async () => {
   const featureData = await allFeatureData();
+  
   return (
     <div className="  dark:bg-slate-800 dark:text-white">
       <div className="container mx-auto py-10 ">

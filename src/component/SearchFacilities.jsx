@@ -4,29 +4,32 @@ import { SearchField } from "@heroui/react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import FeatureCard from "./FeatureCard";
+import { toast } from "react-toastify";
 
 const SearchFacilities = ({ featureData = [] }) => {
   const [searchText, setSearchText] = useState("");
   const [filterData, setFilterData] = useState(featureData);
-
   const [selectedSport, setSelectedSport] = useState("All");
+   
+  const handleSearch = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/facilitiesSearch?search=${searchText}`,
+      );
+      const result = await res.json()
+      setFilterData(result);
+  
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   const uniqueSportTypes = Array.from(
     new Set(featureData.map((item) => item.sportType).filter(Boolean)),
   );
 
-  const applyFilter = (searchValue, sortValue) => {
+  const applyFilter = (sortValue) => {
     let updatedData = [...featureData];
-
-    if (searchText.trim() !== "") {
-      updatedData = updatedData.filter((item) =>
-        item.name
-          ?.toLowerCase()
-          .trim()
-          .includes(searchValue.toLowerCase().trim()),
-      );
-    }
-
     if (sortValue && sortValue.toLowerCase() !== "all") {
       updatedData = updatedData.filter(
         (item) => item.sportType?.toLowerCase() === sortValue.toLowerCase(),
@@ -36,15 +39,11 @@ const SearchFacilities = ({ featureData = [] }) => {
     setFilterData(updatedData);
   };
 
-  const handleFilterAndSearch = () => {
-    applyFilter(searchText, selectedSport);
-  };
-
   const handleFilterByType = (e) => {
     const value = e.target.value;
     setSelectedSport(value);
 
-    applyFilter(searchText, value);
+    applyFilter( value);
   };
 
   return (
@@ -73,7 +72,7 @@ const SearchFacilities = ({ featureData = [] }) => {
                 />
                 <button
                   type="button"
-                  onClick={handleFilterAndSearch}
+                  onClick={handleSearch}
                   className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-slate-800 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-md shadow-orange-200"
                 >
                   <Search size={14} className="stroke-[2.5]" />

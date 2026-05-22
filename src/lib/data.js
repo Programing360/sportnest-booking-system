@@ -27,6 +27,9 @@ export const featureCardDetails = async (id) => {
   return data.json();
 };
 
+
+
+
 export const AddFacilityFeature = async (allFeatureInfo) => {
   const { token } = await auth.api.getToken({
     headers: await headers(),

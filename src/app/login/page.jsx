@@ -15,24 +15,25 @@ import {
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { Slide, toast } from "react-toastify";
-
 import { FaGoogle } from "react-icons/fa";
-import { redirect } from "next/navigation";
+import { redirect, } from "next/navigation";
+
+
 const LoginPage = () => {
   const [isVisible, setIsVisible] = useState(false);
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
-   
-    const { data, error} = await authClient.signIn.email({
+
+    const { data, error } = await authClient.signIn.email({
       email: user.email, // required
       password: user.password,
       rememberMe: true,
       callbackURL: "/",
     });
-
 
     if (data?.user) {
       toast.success("User Login Successful", {
@@ -58,9 +59,8 @@ const LoginPage = () => {
         theme: "light",
         transition: Slide,
       });
-      redirect('/signUp')
+      redirect("/signUp");
     }
-   
   };
   const handleSocialLogin = async () => {
     const data = await authClient.signIn.social({
@@ -124,7 +124,10 @@ const LoginPage = () => {
               }}
             >
               <Label>Email</Label>
-              <Input className='rounded-2xl shadow border-none w-full' placeholder="Enter your email" />
+              <Input
+                className="rounded-2xl shadow border-none w-full"
+                placeholder="Enter your email"
+              />
               <FieldError />
             </TextField>
             <TextField className="w-full " name="password">
@@ -159,7 +162,7 @@ const LoginPage = () => {
               </Button>
             </div>
             <div className="text-center text-xs md:text-sm text-gray-500 mt-2 mb-2">
-               Don't have an account? please
+              Don't have an account? please
               <Link
                 href="/signUp"
                 className="text-[#163962] font-bold hover:underline"
