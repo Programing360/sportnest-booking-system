@@ -51,8 +51,8 @@ const FeatureCard = ({ feature }) => {
   };
 
   return (
-    <div>
-      <Card className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-4xl">
+    <div className="">
+      <Card className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-4xl ">
         <Link href={`/featureCartDetails/${feature._id}`}>
           <figure>
             {isValidImage ? (
