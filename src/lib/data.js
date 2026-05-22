@@ -27,10 +27,18 @@ export const featureCardDetails = async (id) => {
 };
 
 export const AddFacilityFeature = async (allFeatureInfo) => {
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+if (!token) {
+    return redirect("/login");
+  }
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/facilities`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(allFeatureInfo),
   });
