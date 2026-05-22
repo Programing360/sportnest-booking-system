@@ -1,34 +1,43 @@
+// components/Navbar.jsx
+
 "use client";
 
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { IoIosFootball } from "react-icons/io";
-import { LogOut, LayoutDashboard, PlusCircle, Settings, Users, Sun, Moon, Menu } from "lucide-react";
+
+import {
+  LogOut,
+  LayoutDashboard,
+  PlusCircle,
+  Settings,
+  Users,
+  Sun,
+  Moon,
+  Menu,
+} from "lucide-react";
+
+import { useTheme } from "next-themes";
 import NavLink from "./shered/NavLink";
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
-  const user = session?.user;
-  const router = useRouter();
-  
-  const [theme, setTheme] = useState(
-    typeof window !== "undefined" ? localStorage.getItem("theme") || "light" : "light"
-  );
 
-  
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  const user = session?.user;
+
+  const router = useRouter();
+
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  const userInitialName = user?.name ? user.name.charAt(0).toUpperCase() : "U";
+  const userInitialName = user?.name
+    ? user.name.charAt(0).toUpperCase()
+    : "U";
 
   const handleLogOut = async () => {
     await authClient.signOut({
@@ -40,160 +49,196 @@ const Navbar = () => {
     });
   };
 
-  
   const menuItems = (
     <>
       <li>
-        <NavLink href="/" className="font-bold text-sm tracking-wide rounded-xl py-2 px-4 transition-all">Home</NavLink>
+        <NavLink href="/">Home</NavLink>
       </li>
+
       <li>
-        <NavLink href="/allFacilities" className="font-bold text-sm tracking-wide rounded-xl py-2 px-4 transition-all">All Facilities</NavLink>
+        <NavLink href="/allFacilities">
+          All Facilities
+        </NavLink>
       </li>
+
       <li>
-        <NavLink href="/myBookings" className="font-bold text-sm tracking-wide rounded-xl py-2 px-4 transition-all">My Bookings</NavLink>
+        <NavLink href="/myBookings">
+          My Bookings
+        </NavLink>
       </li>
+
       <li>
-        <NavLink href="/addFacility" className="font-bold text-sm tracking-wide rounded-xl py-2 px-4 transition-all">Add Facility</NavLink>
+        <NavLink href="/addFacility">
+          Add Facility
+        </NavLink>
       </li>
+
       <li>
-        <NavLink href="/manageFacilities" className="font-bold text-sm tracking-wide rounded-xl py-2 px-4 transition-all">Manage Facilities</NavLink>
+        <NavLink href="/manageFacilities">
+          Manage Facilities
+        </NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-100 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">
-      <div className="navbar container mx-auto px-4 md:px-6 min-h-[70px]">
+    <div className="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-md transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900/90">
+      <div className="navbar container mx-auto min-h-[70px] px-4 md:px-6">
         
-    
+        {/* LEFT */}
         <div className="navbar-start">
+
+          {/* MOBILE MENU */}
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-2 text-gray-700 dark:text-gray-200">
+
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost p-2 lg:hidden"
+            >
               <Menu size={22} />
             </div>
+
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-50 p-3 shadow-2xl bg-white dark:bg-slate-800 rounded-2xl w-56 border border-gray-100 dark:border-slate-700 gap-1 text-gray-700 dark:text-gray-200"
+              className="menu dropdown-content menu-sm z-[50] mt-3 w-56 gap-1 rounded-2xl border border-gray-100 bg-white p-3 shadow-2xl dark:border-slate-700 dark:bg-slate-800"
             >
               {menuItems}
             </ul>
           </div>
-          
-       
-          <Link href="/" className="flex items-center gap-2 active:scale-95 transition-transform ml-2 lg:ml-0">
-            <div className="p-2 bg-blue-600 rounded-xl text-white shadow-md shadow-blue-500/20">
-              <IoIosFootball size={24} className="animate-spin-slow" />
+
+          {/* LOGO */}
+          <Link
+            href="/"
+            className="ml-2 flex items-center gap-2 lg:ml-0"
+          >
+            <div className="rounded-xl bg-blue-600 p-2 text-white">
+              <IoIosFootball
+                size={24}
+                className="animate-spin"
+              />
             </div>
-            <h1 className="text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-600 dark:from-blue-400 dark:to-indigo-300 font-black tracking-tight">
-              Sport<span className="text-orange-500">Nest</span>
+
+            <h1 className="bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-2xl font-black text-transparent dark:from-blue-400 dark:to-indigo-300">
+              Sport
+              <span className="text-orange-500">
+                Nest
+              </span>
             </h1>
           </Link>
         </div>
 
+        {/* CENTER */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-1 text-gray-600 dark:text-gray-300">
+          <ul className="menu menu-horizontal gap-2">
             {menuItems}
           </ul>
         </div>
 
-   
+        {/* RIGHT */}
         <div className="navbar-end gap-3">
-          
-          
+
+          {/* THEME BUTTON */}
           <button
             onClick={toggleTheme}
-            className="btn btn-ghost btn-circle text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800"
-            aria-label="Toggle Theme"
+            className="btn btn-ghost btn-circle"
           >
             {theme === "light" ? (
-              <Moon size={20} className="stroke-[2]" />
+              <Moon size={20} />
             ) : (
-              <Sun size={20} className="stroke-[2] text-amber-400" />
+              <Sun
+                size={20}
+                className="text-amber-400"
+              />
             )}
           </button>
 
+          {/* USER */}
           {user ? (
             <div className="dropdown dropdown-end">
-           
-              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar online placeholder border border-gray-200 dark:border-slate-700">
+
+              <div
+                tabIndex={0}
+                role="button"
+                className="avatar btn btn-ghost btn-circle"
+              >
                 {user?.image ? (
                   <div className="w-10 rounded-full">
-                    <img alt={user?.name || "User"} src={user.image} />
+                    <img
+                      src={user.image}
+                      alt={user.name}
+                    />
                   </div>
                 ) : (
-                  <div className="bg-neutral text-neutral-content rounded-full w-10 font-bold">
-                    <span>{userInitialName}</span>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-bold text-white">
+                    {userInitialName}
                   </div>
                 )}
               </div>
-              
-          
+
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow-2xl bg-white dark:bg-slate-800 rounded-2xl w-64 border border-gray-100 dark:border-slate-700 font-medium text-gray-700 dark:text-gray-200"
+                className="menu dropdown-content z-[50] mt-3 w-64 rounded-2xl border border-gray-100 bg-white p-2 shadow-2xl dark:border-slate-700 dark:bg-slate-800"
               >
-                
-                <div className="px-4 py-3 border-b border-gray-50 dark:border-slate-700/60 mb-1 flex items-center gap-3">
-                  <div className="avatar placeholder">
-                    <div className="bg-blue-500 text-white rounded-xl w-10 font-bold text-sm">
-                      {user?.image ? <img src={user.image} alt="" /> : <span>{userInitialName}</span>}
-                    </div>
-                  </div>
-                  <div className="truncate max-w-[160px]">
-                    <p className="text-sm font-black text-gray-900 dark:text-white truncate">{user.name}</p>
-                    <p className="text-xs text-gray-400 truncate">{user.email}</p>
-                  </div>
+
+                <div className="mb-2 border-b border-gray-100 px-4 py-3 dark:border-slate-700">
+                  <p className="font-bold">
+                    {user.name}
+                  </p>
+
+                  <p className="text-sm text-gray-400">
+                    {user.email}
+                  </p>
                 </div>
 
-            
                 <li>
-                  <Link href="/myBookings" className="py-2.5 rounded-xl flex items-center gap-2.5 hover:bg-blue-50 dark:hover:bg-slate-700/50">
-                    <LayoutDashboard size={16} className="text-blue-500" />
-                    <span>My Bookings</span>
+                  <Link href="/myBookings">
+                    <LayoutDashboard size={16} />
+                    My Bookings
                   </Link>
                 </li>
+
                 <li>
-                  <Link href="/addFacility" className="py-2.5 rounded-xl flex items-center gap-2.5 hover:bg-blue-50 dark:hover:bg-slate-700/50">
-                    <PlusCircle size={16} className="text-emerald-500" />
-                    <span>Add Facility</span>
+                  <Link href="/addFacility">
+                    <PlusCircle size={16} />
+                    Add Facility
                   </Link>
                 </li>
+
                 <li>
-                  <Link href="/manageFacilities" className="py-2.5 rounded-xl flex items-center gap-2.5 hover:bg-blue-50 dark:hover:bg-slate-700/50">
-                    <Settings size={16} className="text-purple-500" />
-                    <span>Manage My Facilities</span>
+                  <Link href="/manageFacilities">
+                    <Settings size={16} />
+                    Manage Facilities
                   </Link>
                 </li>
+
                 <li>
-                  <Link href="/createTeam" className="py-2.5 rounded-xl flex items-center gap-2.5 hover:bg-blue-50 dark:hover:bg-slate-700/50">
-                    <Users size={16} className="text-indigo-500" />
-                    <span>Create Team</span>
+                  <Link href="/createTeam">
+                    <Users size={16} />
+                    Create Team
                   </Link>
                 </li>
-                
-                <div className="border-t border-gray-50 dark:border-slate-700/60 my-1"></div>
-                
-           
+
+                <div className="my-1 border-t border-gray-100 dark:border-slate-700"></div>
+
                 <li>
-                  <button 
+                  <button
                     onClick={handleLogOut}
-                    className="py-2.5 rounded-xl flex items-center gap-2.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 font-bold"
+                    className="text-rose-600"
                   >
                     <LogOut size={16} />
-                    <span>Log Out</span>
+                    Logout
                   </button>
                 </li>
               </ul>
             </div>
           ) : (
-            
-            <Link href={"/login"}>
-              <button className="btn btn-md px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 border-none text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-500/10 active:scale-95 transition-all">
+            <Link href="/login">
+              <button className="btn border-none bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700">
                 Login
               </button>
             </Link>
           )}
-
         </div>
       </div>
     </div>

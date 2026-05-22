@@ -1,186 +1,213 @@
 "use client";
 import React, { useState } from "react";
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
-import {
-  Button,
-  Card,
-  Description,
-  FieldError,
-  Form,
-  Input,
-  InputGroup,
-  Label,
-  TextField,
-} from "@heroui/react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { Slide, toast } from "react-toastify";
 import { FaGoogle } from "react-icons/fa";
-import { redirect, } from "next/navigation";
-
+import { redirect } from "next/navigation";
 
 const LoginPage = () => {
   const [isVisible, setIsVisible] = useState(false);
-
-
+  const [loading, setLoading] = useState(false);
+  
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
 
-    const { data, error } = await authClient.signIn.email({
-      email: user.email, // required
-      password: user.password,
-      rememberMe: true,
-      callbackURL: "/",
-    });
+    setLoading(true);
 
-    if (data?.user) {
-      toast.success("User Login Successful", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email: user.email,
+        password: user.password,
+        rememberMe: true,
+        callbackURL: "/",
       });
-    } else {
-      toast.warn(`${error.message}`, {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
-      redirect("/signUp");
+
+      if (data?.user) {
+        toast.success("User Login Successful", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });
+      } else {
+        toast.warn(`${error.message}`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });
+        redirect("/signUp");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
+
   const handleSocialLogin = async () => {
-    const data = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-    });
-    if (data?.user) {
-      toast.success("User Login Successful", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
+    setLoading(true);
+    try {
+      const data = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
       });
-    } else {
-      toast.warn("Something is Wrong! Try Again.", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
+
+      if (data?.user) {
+        toast.success("User Login Successful", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });
+      } else {
+        toast.warn("Something is Wrong! Try Again.", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-slate-100 to-[#163962]/10 px-4 py-12">
-      <Card className="max-w-2xl mx-auto border border-slate-200/60 shadow-2xl rounded-3xl bg-white/80 backdrop-blur-md p-2 md:p-4">
-        <div className="flex flex-col items-center w-90">
-          <div className="text-center space-y-2 mt-4">
-            <div className="inline-flex items-center gap-2 mb-2">
-              <span className="text-4xl md:text-4xl font-extrabold text-[#163962] tracking-wide">
-                ⚽Sport<span className="text-orange-500">Nest</span>
-              </span>
-            </div>
-            <h2 className="text-xl md:text-2xl font-bold text-slate-800">
-              Welcome Back
-            </h2>
-            <p className="text-xs md:text-sm text-gray-500 mb-4 max-w-70">
-              Sign in to manage your bookings and explore venues
-            </p>
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 py-12 transition-colors duration-300">
+      <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-[2.5rem] p-6 sm:p-10 transition-all">
+        
+        <div className="text-center space-y-2 mb-8">
+          <div className="inline-flex items-center gap-2">
+            <span className="text-3xl font-black text-[#163962] dark:text-white tracking-wide">
+              ⚽ Sport<span className="text-orange-500">Nest</span>
+            </span>
           </div>
-          <Form className="space-y-6 w-full p-4" onSubmit={onSubmit}>
-            <TextField
-              isRequired
-              name="email"
-              className=""
-              type="email"
-              validate={(value) => {
-                if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                  return "Please enter a valid email address";
-                }
-                return null;
-              }}
-            >
-              <Label>Email</Label>
-              <Input
-                className="rounded-2xl shadow border-none w-full"
-                placeholder="Enter your email"
-              />
-              <FieldError />
-            </TextField>
-            <TextField className="w-full " name="password">
-              <Label>Password</Label>
-              <InputGroup>
-                <InputGroup.Input
-                  className="w-full rounded-xl"
-                  type={isVisible ? "text" : "password"}
-                  placeholder="Enter your password"
-                />
-                <InputGroup.Suffix className="pr-0">
-                  <Button
-                    isIconOnly
-                    aria-label={isVisible ? "Hide password" : "Show password"}
-                    size="sm"
-                    variant="ghost"
-                    onPress={() => setIsVisible(!isVisible)}
-                  >
-                    {isVisible ? (
-                      <Eye className="size-4" />
-                    ) : (
-                      <EyeSlash className="size-4" />
-                    )}
-                  </Button>
-                </InputGroup.Suffix>
-              </InputGroup>
-            </TextField>
-            <div className="flex gap-2">
-              <Button type="submit" className=" bg-[#0f2947] w-full mt-2">
-                <Check />
-                Login
-              </Button>
-            </div>
-            <div className="text-center text-xs md:text-sm text-gray-500 mt-2 mb-2">
-              Don't have an account? please
-              <Link
-                href="/signUp"
-                className="text-[#163962] font-bold hover:underline"
-              >
-                Sign Up
-              </Link>
-            </div>
-            <Button
-              onClick={handleSocialLogin}
-              className="w-full mt-7"
-              variant="tertiary"
-            >
-              <FaGoogle icon="devicon:google" />
-              <span className="dark:text-black">Sign in with Google</span>
-            </Button>
-          </Form>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
+            Welcome Back
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-400 max-w-[280px] mx-auto font-medium">
+            Sign in to manage your bookings and explore premium sports venues.
+          </p>
         </div>
-      </Card>
+
+        <form className="space-y-5" onSubmit={onSubmit}>
+          
+          <div className="form-control w-full">
+            <label className="label font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Email Address
+            </label>
+            <input
+              required
+              disabled={loading}
+              name="email"
+              type="email"
+              placeholder="name@example.com"
+              className="input input-md w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl focus:border-orange-500 outline-none transition-all font-medium text-sm disabled:opacity-60"
+            />
+          </div>
+
+          <div className="form-control w-full">
+            <label className="label font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Password
+            </label>
+            <div className="relative w-full">
+              <input
+                required
+                disabled={loading}
+                name="password"
+                type={isVisible ? "text" : "password"}
+                placeholder="••••••••"
+                className="input input-md w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl focus:border-orange-500 outline-none transition-all font-medium text-sm pr-12 disabled:opacity-60"
+              />
+              <button
+                type="button"
+                disabled={loading}
+                onClick={() => setIsVisible(!isVisible)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors disabled:opacity-30"
+                aria-label={isVisible ? "Hide password" : "Show password"}
+              >
+                {isVisible ? <Eye className="size-4" /> : <EyeSlash className="size-4" />}
+              </button>
+            </div>
+          </div>
+
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-md w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 border-none text-white font-black rounded-xl shadow-lg shadow-orange-500/10 active:scale-98 transition-all gap-2 uppercase tracking-wide text-xs disabled:opacity-70"
+            >
+              {loading ? (
+                <>
+                  <span className="loading loading-spinner loading-xs"></span>
+                  <span>Signing In...</span>
+                </>
+              ) : (
+                <>
+                  <Check className="size-4 stroke-[2.5]" />
+                  <span>Login</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          <div className="text-center text-xs font-semibold text-slate-500 dark:text-slate-400 pt-1">
+            Don't have an account?{" "}
+            <Link
+              href="/signUp"
+              className="text-[#163962] dark:text-orange-400 font-extrabold hover:underline"
+            >
+              Sign Up
+            </Link>
+          </div>
+
+          <div className="divider text-[10px] uppercase font-black tracking-widest text-slate-400 dark:text-slate-600 my-6">
+            OR CONTINUE WITH
+          </div>
+
+          <button
+            type="button"
+            disabled={loading}
+            onClick={handleSocialLogin}
+            className="btn btn-md btn-outline w-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-950 hover:text-slate-900 dark:text-slate-300 font-bold rounded-xl active:scale-98 transition-all gap-2.5 text-xs uppercase tracking-wide disabled:opacity-50"
+          >
+            {loading ? (
+              <span className="loading loading-spinner loading-xs"></span>
+            ) : (
+              <FaGoogle className="text-red-500 size-3.5" />
+            )}
+            <span>Sign in with Google</span>
+          </button>
+
+        </form>
+      </div>
     </div>
   );
 };
