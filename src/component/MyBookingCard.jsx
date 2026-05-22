@@ -60,7 +60,7 @@ const MyBookingCard = ({ bookingCard }) => {
   return (
     <Card
       shadow="none"
-      className="w-full bg-white  border-gray-100 hover:border-purple-100 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-purple-600/[0.02] transition-all duration-400 mb-5 group relative overflow-hidden "
+      className="w-full bg-white border-gray-100 hover:border-purple-100 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-purple-600/[0.02] transition-all duration-400 mt-4 group relative overflow-hidden "
     >
       <div className="p-0">
         <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-transparent group-hover:bg-purple-600 transition-colors duration-300 z-20" />

@@ -47,8 +47,8 @@ const EditFacilityForm = ({ facilityData, id }) => {
     setIsUpdating(true);
     try {
       const res = await updateFacilities(formData, id);
-    
-      if (res.modifiedCount > 0){
+
+      if (res.modifiedCount > 0) {
         toast.success("🎯 Facility updated successfully!");
 
         router.push("/manageFacilities");
@@ -64,7 +64,7 @@ const EditFacilityForm = ({ facilityData, id }) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 antialiased">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 antialiased  dark:text-white">
       <div className="mb-8">
         <Link href="/manageFacilities">
           <button className="btn btn-sm bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200/60 rounded-xl gap-2 font-bold normal-case mb-4 shadow-sm">
@@ -73,13 +73,13 @@ const EditFacilityForm = ({ facilityData, id }) => {
           </button>
         </Link>
         <div>
-          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight flex items-center gap-2">
-            <Sparkles size={24} className="text-purple-600" />
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
+            <Sparkles size={24} className="text-orange-600" />
             <span>Edit Facility Details</span>
           </h1>
           <p className="text-xs md:text-sm text-gray-400 font-medium mt-1">
             Modifying parameters for ID:
-            <span className="font-mono text-purple-600 font-bold">{id}</span>
+            <span className="font-mono text-orange-600 font-bold">{id}</span>
           </p>
         </div>
       </div>
@@ -92,13 +92,16 @@ const EditFacilityForm = ({ facilityData, id }) => {
                 Facility Name <span className="text-rose-500">*</span>
               </label>
               <div className="relative flex items-center">
-                <Building size={16} className="absolute left-4 text-gray-400" />
+                <Building
+                  size={16}
+                  className="absolute left-4 text-gray-400 "
+                />
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="input input-bordered w-full pl-11 bg-gray-50/70 focus:border-purple-500 focus:bg-white rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
+                  className="input input-bordered w-full pl-11 bg-orange-50/70 focus:border-orange-500 focus:bg-white shadow rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
                   required
                 />
               </div>
@@ -112,17 +115,19 @@ const EditFacilityForm = ({ facilityData, id }) => {
                 name="sportType"
                 value={formData.sportType}
                 onChange={handleChange}
-                className="select select-bordered w-full bg-gray-50/70 focus:border-purple-500 focus:bg-white rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
+                className="select select-bordered w-full bg-orange-50/70   focus:border-orange-500 focus:bg-white rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none shadow"
                 required
               >
                 <option value="" disabled>
                   Select Sport Category
                 </option>
-                <option value="Football">Football</option>
-                <option value="Cricket">Cricket</option>
-                <option value="Badminton">Badminton</option>
-                <option value="Tennis">Tennis</option>
-                <option value="Gymnasium">Gymnasium</option>
+                <div className="">
+                  <option value="Football">Football</option>
+                  <option value="Cricket">Cricket</option>
+                  <option value="Badminton">Badminton</option>
+                  <option value="Tennis">Tennis</option>
+                  <option value="Gymnasium">Gymnasium</option>
+                </div>
               </select>
             </div>
 
@@ -137,7 +142,7 @@ const EditFacilityForm = ({ facilityData, id }) => {
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
-                  className="input input-bordered w-full pl-11 bg-gray-50/70 focus:border-purple-500 focus:bg-white rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
+                  className="input input-bordered w-full pl-11 bg-orange-50/70 focus:border-orange-500 focus:bg-white shadow rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
                 />
               </div>
             </div>
@@ -156,7 +161,7 @@ const EditFacilityForm = ({ facilityData, id }) => {
                   name="pricePerHour"
                   value={formData.pricePerHour}
                   onChange={handleChange}
-                  className="input input-bordered w-full pl-11 bg-gray-50/70 focus:border-purple-500 focus:bg-white rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
+                  className="input input-bordered w-full pl-11 bg-orange-50/70 focus:border-orange-500 focus:bg-white shadow rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
                   required
                 />
               </div>
@@ -174,7 +179,7 @@ const EditFacilityForm = ({ facilityData, id }) => {
                 name="image"
                 value={formData.image}
                 onChange={handleChange}
-                className="input input-bordered w-full pl-11 bg-gray-50/70 focus:border-purple-500 focus:bg-white rounded-2xl font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
+                className="input input-bordered w-full pl-11 bg-orange-50/70 focus:border-orange-500 focus:bg-white rounded-2xl shadow font-semibold text-gray-800 text-sm h-12 transition-all outline-none"
               />
             </div>
           </div>
@@ -188,7 +193,7 @@ const EditFacilityForm = ({ facilityData, id }) => {
               value={formData.description}
               onChange={handleChange}
               rows="4"
-              className="textarea textarea-bordered w-full p-4 bg-gray-50/70 focus:border-purple-500 focus:bg-white rounded-2xl font-semibold text-gray-800 text-sm transition-all resize-none outline-none leading-relaxed"
+              className="textarea textarea-bordered w-full p-4 bg-orange-50/70 focus:border-orange-500 focus:bg-white rounded-2xl shadow font-semibold text-gray-800 text-sm transition-all resize-none outline-none leading-relaxed"
             />
           </div>
 
@@ -196,7 +201,7 @@ const EditFacilityForm = ({ facilityData, id }) => {
             <button
               type="submit"
               disabled={isUpdating}
-              className="btn bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs uppercase tracking-wider px-6 h-12 rounded-2xl border-none shadow-lg shadow-purple-600/10 flex items-center gap-2 active:scale-95 transition-transform"
+              className="btn bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs uppercase tracking-wider px-6 h-12 rounded-2xl border-none shadow-lg shadow-orange-600/10 flex items-center gap-2 active:scale-95 transition-transform"
             >
               {isUpdating ? (
                 <span className="loading loading-spinner loading-xs"></span>

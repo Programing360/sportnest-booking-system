@@ -31,6 +31,8 @@ const SignUpPage = () => {
       callbackURL: "/login",
     });
 
+    console.log(data);
+
     if (data?.user) {
       toast.success("Register Successful", {
         position: "top-center",

@@ -85,7 +85,7 @@ const Navbar = () => {
               <IoIosFootball size={24} className="animate-spin-slow" />
             </div>
             <h1 className="text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-600 dark:from-blue-400 dark:to-indigo-300 font-black tracking-tight">
-              SportNest
+              Sport<span className="text-orange-500">Nest</span>
             </h1>
           </Link>
         </div>

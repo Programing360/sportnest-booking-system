@@ -58,14 +58,14 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
   };
   return (
     <div>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 antialiased">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 antialiased ">
         
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-2xl md:text-4xl font-black text-gray-900 tracking-tight">
+            <h1 className="text-2xl md:text-4xl font-black text-gray-900 tracking-tight dark:text-white">
               Manage My Facilities
             </h1>
-            <p className="text-xs md:text-sm text-gray-400 font-medium mt-1">
+            <p className="text-xs md:text-sm text-gray-400 font-medium mt-1 ">
               Exclusive Owner Access: Update details or manage slots of your
               registered arenas.
             </p>

@@ -26,13 +26,15 @@ const LoginPage = () => {
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
    
-    const { data, error } = await authClient.signIn.email({
+    const { data, error} = await authClient.signIn.email({
       email: user.email, // required
       password: user.password,
       rememberMe: true,
       callbackURL: "/",
     });
-    if (data) {
+
+
+    if (data?.user) {
       toast.success("User Login Successful", {
         position: "top-center",
         autoClose: 1000,
@@ -65,7 +67,7 @@ const LoginPage = () => {
       provider: "google",
       callbackURL: "/",
     });
-    if (data) {
+    if (data?.user) {
       toast.success("User Login Successful", {
         position: "top-center",
         autoClose: 1000,

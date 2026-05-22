@@ -8,7 +8,9 @@ import React, { useEffect, useState } from "react";
 import { FaCheckCircle, FaClock, FaStar, FaUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { toast } from "react-toastify";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 const CardDetails = ({ featureCard }) => {
   const { data: session } = authClient.useSession();
 const [today, setToday] = useState("");
@@ -54,17 +56,18 @@ useEffect(() => {
     <div className="container mx-auto mt-20 ">
       <Card className="w-full rounded-4xl">
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-          <div className="max-h-[500px]">
+          <div data-aos="fade-up" data-aos-duration="1000" className="max-h-[500px]">
             <Image
               src={featureCard?.image}
-              alt=""
+              alt={featureCard?.name}
+              
               width={600}
               height={700}
               className="rounded-4xl  object-cover h-full"
             ></Image>
           </div>
           <div>
-            <div className="flex-1 py-2">
+            <div data-aos="fade-down" className="flex-1 py-2">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="animate-text flex items-center gap-2 text-purple-600 mb-2">
@@ -146,7 +149,7 @@ useEffect(() => {
                     {user ? (
                       <Button
                         onClick={handleBooking}
-                        className="w-full active:scale-95 bg-[#163962]"
+                        className="w-full active:scale-95 bg-[#163962] hover:bg-orange-500 transition-all duration-300"
                       >
                         Booking Now
                       </Button>

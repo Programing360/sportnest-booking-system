@@ -16,8 +16,8 @@ const NavLink = ({ href, children }) => {
       className={`relative py-2 px-1 text-sm font-semibold tracking-wide transition-all duration-300 ease-in-out group outline-none
         ${
           isActive
-            ? "text-orange-600 font-bold"
-            : "text-gray-500 hover:text-gray-950"
+            ? " font-bold"
+            : "text-gray-500 hover:text-gray-950 dark:hover:text-white"
         }`}
     >
       <span>{children}</span>

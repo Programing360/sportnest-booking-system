@@ -50,7 +50,7 @@ const SearchFacilities = ({ featureData = [] }) => {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-10 pb-6 border-b border-gray-100">
-        <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 w-full md:w-auto tracking-tight dark:text-white-900">
+        <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 w-full md:w-auto tracking-tight dark:text-white ">
           All Facilities
         </h1>
 

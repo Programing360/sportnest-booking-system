@@ -7,7 +7,7 @@ const ManageFacilitiesPage = async () => {
     const allFacilitiesData = await allFeatureData()
 
   return (
-    <div>
+    <div className="dark:bg-slate-800 dark:text-white">
       <ManageFacilities ownerFacilities={allFacilitiesData}></ManageFacilities>
     </div>
   );

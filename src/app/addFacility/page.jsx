@@ -38,35 +38,32 @@ const AddFacility = () => {
       createAt: new Date(),
     };
 
-    const res = await AddFacilityFeature(allFeatureInfo)
-   
+    const res = await AddFacilityFeature(allFeatureInfo);
 
     if (res.insertedId) {
       toast.success("Facility Added Successfully!");
     } else {
       toast.error("Failed toAdd Facility!");
     }
-
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50/50 py-10 px-4 sm:px-6 lg:px-8 bg-slate-900">
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Breadcrumb Navigation / Header */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
               <span>Dashboard</span>
               <FaChevronRight className="text-[10px]" />
-              <span className="text-[#163962]">Add Facility</span>
+              <span className="text-[#ff8904]">Add Facility</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight ">
               Create New Sports Facility
             </h1>
           </div>
         </div>
         <Form className="flex flex-col gap-4" onSubmit={handleSubmitForm}>
-          <div className="flex w-full gap-8 ">
+          <div className="flex flex-col md:flex-row w-full gap-8 text-white">
             <div className="w-full space-y-5 ">
               <div>
                 <TextField isRequired name="name" type="text">
@@ -152,12 +149,12 @@ const AddFacility = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button type="submit">
+          <div className="flex items-center gap-2">
+            <Button type="submit" className="bg-[#0f2947] hover:bg-orange-400 transition-all duration-300 w-full mt-2">
               <Check />
               Submit
             </Button>
-            <Button type="reset" variant="secondary">
+            <Button type="reset" variant="secondary" className={" w-full mt-2 hover:bg-gray-700 transition-all duration-300 "}>
               Reset
             </Button>
           </div>

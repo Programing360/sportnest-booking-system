@@ -13,7 +13,7 @@ import { Button, Input } from "@heroui/react";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#163962] text-slate-200 mt-20 border-t border-slate-700/50">
+    <footer className="bg-[#163962] text-slate-200 border-t border-slate-700/50">
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
@@ -85,7 +85,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <FaEnvelope className="text-orange-400 flex-shrink-0" />
-                <span className="break-all">support@sportnest.com</span>
+                <span className="break-all">fhlimon360@gamail.com</span>
               </li>
             </ul>
           </div>
@@ -123,8 +123,8 @@ const Footer = () => {
         <div className="container mx-auto px-4 md:px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <p>© {new Date().getFullYear()} SportNest. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

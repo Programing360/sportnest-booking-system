@@ -39,7 +39,9 @@ const Testimonials = () => {
     <div className="container mx-auto mt-20 px-4 py-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-12 border-b border-slate-100 pb-6">
         <div>
-          <span className="text-sm text-orange-500 uppercase tracking-widest">REVIEWS</span>
+          <span className="text-sm text-orange-500 uppercase tracking-widest">
+            REVIEWS
+          </span>
           <h1 className="text-sm md:text-3xl font-bold text-slate-800 ">
             Whats Our Players Say
           </h1>
@@ -50,15 +52,17 @@ const Testimonials = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        {
-            reviews.map(item => <Card key={item.id}
-            className="border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 rounded-3xl bg-white relative overflow-visible pt-4">
-                <div className="absolute top-[-18px] left-6 w-9 h-9 rounded-xl bg-[#163962] text-white flex items-center justify-center text-sm shadow-md shadow-[#163962]/20">
+        {reviews.map((item) => (
+          <Card
+            data-aos="fade-left"
+            key={item.id}
+            className="border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 rounded-3xl bg-white relative overflow-visible pt-4"
+          >
+            <div className="absolute top-[-18px] left-6 w-9 h-9 rounded-xl bg-[#163962] text-white flex items-center justify-center text-sm shadow-md shadow-[#163962]/20">
               <FaQuoteLeft />
             </div>
 
             <div className="p-6 md:p-8 flex flex-col justify-between h-full gap-6">
-              
               {/* Review Text */}
               <p className="text-sm md:text-base text-gray-600 italic leading-relaxed">
                 {item.comment}
@@ -90,10 +94,9 @@ const Testimonials = () => {
                   ))}
                 </div>
               </div>
-
             </div>
-            </Card>)
-        }
+          </Card>
+        ))}
       </div>
     </div>
   );
