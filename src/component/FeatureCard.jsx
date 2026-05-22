@@ -1,105 +1,150 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
-import { bookingFacilities, myBookingFacilities } from "@/lib/data";
-import { Button, Card } from "@heroui/react";
-import { ImageOff } from "lucide-react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import React from "react";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { bookingFacilities, myBookingFacilities } from "@/lib/data";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import { ImageOff, DollarSign, Clock, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 
 const FeatureCard = ({ feature }) => {
+  const router = useRouter();
   const { data: session } = authClient.useSession();
-  const imageSrc = feature?.image || feature?.img;
+  const [isBooking, setIsBooking] = useState(false);
 
+  const imageSrc = feature?.image || feature?.img;
   const isValidImage = typeof imageSrc === "string" && imageSrc.trim() !== "";
   const userData = session?.user;
 
-  const handleBooking = async () => {
+  const handleBooking = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (!userData) {
-      return redirect("/login");
+      router.push("/login");
+      return;
     }
 
-    const myBooking = await myBookingFacilities(user.id);
-    const matchBooking = myBooking.find(
-      (item) => item.facility_id === feature._id,
-    );
+    setIsBooking(true);
+    try {
+      const myBooking = await myBookingFacilities(userData.id);
+      const matchBooking = myBooking?.find(
+        (item) => item.facility_id === feature._id
+      );
 
-    if (matchBooking) {
-      return toast.success("Already add your Choice Item");
-    }
+      if (matchBooking) {
+        toast.info("This facility is already in your booking choices.");
+        return;
+      }
 
-    const bookingInfo = {
-      facility_id: feature._id,
-      userId: user?.id,
-      userEmail: user?.email,
-      image: feature.image,
-      facilityName: feature.name,
-      bookingDate: new Date(),
-      timeSlot: "6pm - 8pm",
-      hours: 2,
-      totalPrice: feature.pricePerHour,
-    };
+      const bookingInfo = {
+        facility_id: feature._id,
+        userId: userData?.id,
+        userEmail: userData?.email,
+        image: feature.image,
+        facilityName: feature.name,
+        bookingDate: new Date(),
+        timeSlot: "6pm - 8pm",
+        hours: 2,
+        totalPrice: feature.pricePerHour,
+      };
 
-    const res = await bookingFacilities(bookingInfo);
-    if (res.insertedId) {
-      toast.success("Booking Successful");
-    } else {
-      toast.error("Booking Failed");
+      const res = await bookingFacilities(bookingInfo);
+      if (res?.insertedId) {
+        toast.success("Booking Successful!");
+      } else {
+        toast.error("Booking Failed. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("An unexpected error occurred.");
+    } finally {
+      setIsBooking(false);
     }
   };
 
   return (
     <AnimateOnScroll>
       <motion.div
-        data-aos="fade-up"
-        whileHover={{ y: -8 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className=""
+        whileHover={{ y: -6 }}
+        transition={{ type: "spring", stiffness: 300, damping: 24 }}
+        className="w-full max-w-[380px] mx-auto h-full"
       >
-        <Card className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-4xl dark:text-black">
-          <Link href={`/featureCartDetails/${feature._id}`}>
-            <figure>
+        <div className="group relative flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-[2rem] overflow-hidden shadow-lg shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+          
+          <Link href={`/featureCartDetails/${feature._id}`} className="flex-1 flex flex-col">
+            <div className="relative w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-950">
               {isValidImage ? (
                 <Image
                   src={imageSrc}
                   alt={feature?.name || "Facility Image"}
-                  width={400}
-                  height={400}
-                  className="object-cover w-full h-50 transition hover:scale-105 duration-150 rounded-3xl"
+                  fill
+                  sizes="(max-w-700px) 100vw, 400px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center text-gray-400 gap-1.5">
-                  <ImageOff size={28} className="text-gray-300" />
-                  <span className="text-[11px] font-bold uppercase tracking-wider">
-                    No Preview
-                  </span>
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 gap-2">
+                  <ImageOff size={32} className="stroke-[1.5]" />
+                  <span className="text-[10px] font-black tracking-widest uppercase">No Preview Available</span>
                 </div>
               )}
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{feature.name}</h2>
-              <p>{feature.description}</p>
+              
+              <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-slate-900 dark:text-white font-black text-xs px-3 py-1.5 rounded-full shadow-sm flex items-center gap-0.5">
+                <DollarSign size={13} className="text-orange-500 stroke-[3]" />
+                <span>{feature.pricePerHour || "0"}</span>
+                <span className="text-slate-400 dark:text-slate-500 font-medium text-[10px] ml-0.5">/ hr</span>
+              </div>
+            </div>
+
+            <div className="p-5 flex-1 flex flex-col justify-between">
+              <div className="space-y-2">
+                <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 tracking-tight group-hover:text-orange-500 transition-colors line-clamp-1">
+                  {feature.name}
+                </h3>
+                <p className="text-xs text-slate-400 dark:text-slate-400 font-medium leading-relaxed line-clamp-2">
+                  {feature.description || "No description provided for this venue facility."}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4 pt-4 mt-4 border-t border-slate-50 dark:border-slate-800/60 text-slate-400 dark:text-slate-500 font-bold text-[11px] uppercase tracking-wider">
+                <div className="flex items-center gap-1">
+                  <Clock size={13} className="text-orange-500" />
+                  <span>2 Hours Slot</span>
+                </div>
+              </div>
             </div>
           </Link>
-          {userData ? (
-            <Button
-              onClick={handleBooking}
-              className="btn w-full bg-[#163962] text-white hover:scale-105 transition-all duration-200 active:scale-95 font-medium rounded-full shadow-sm text-sm "
-            >
-              Booking Now
-            </Button>
-          ) : (
-            <Link href={"/login"}>
-              <Button className="btn w-full bg-[#163962] text-white hover:scale-105 transition-all duration-200 active:scale-95 font-medium rounded-full shadow-sm text-sm ">
-                Booking Now
-              </Button>
-            </Link>
-          )}
-        </Card>
+
+          <div className="p-5 pt-0">
+            {userData ? (
+              <button
+                onClick={handleBooking}
+                disabled={isBooking}
+                className="btn btn-md w-full bg-slate-900 dark:bg-slate-800 hover:bg-orange-500 dark:hover:bg-orange-500 border-none text-white font-black rounded-xl active:scale-95 transition-all gap-2 text-xs uppercase tracking-wider disabled:opacity-50"
+              >
+                {isBooking ? (
+                  <span className="loading loading-spinner loading-xs"></span>
+                ) : (
+                  <>
+                    <span>Book Venue</span>
+                    <ArrowRight size={14} className="stroke-[2.5]" />
+                  </>
+                )}
+              </button>
+            ) : (
+              <Link href="/login" className="block w-full">
+                <button className="btn btn-md w-full bg-slate-900 dark:bg-slate-800 hover:bg-orange-500 dark:hover:bg-orange-500 border-none text-white font-black rounded-xl active:scale-95 transition-all gap-2 text-xs uppercase tracking-wider">
+                  <span>Login to Book</span>
+                  <ArrowRight size={14} className="stroke-[2.5]" />
+                </button>
+              </Link>
+            )}
+          </div>
+
+        </div>
       </motion.div>
     </AnimateOnScroll>
   );
