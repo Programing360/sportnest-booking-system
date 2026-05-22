@@ -20,8 +20,9 @@ export const ThemeProviderWrapper = ({ children }) => {
       attribute="class"
       defaultTheme="system"
       enableSystem
+      disableTransitionOnChange
     >
       {children}
     </ThemeProvider>
   );
-}
+};

@@ -101,7 +101,7 @@ const CardDetails = ({ featureCard }) => {
 
             <hr className="border-slate-100 dark:border-slate-800" />
 
-            {/* ডেসক্রিপশন বা ভেন্যু ওভারভিউ */}
+         
             <div className="space-y-2">
               <h2 className="text-xs font-black uppercase tracking-widest text-orange-500">About this venue</h2>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
@@ -109,7 +109,7 @@ const CardDetails = ({ featureCard }) => {
               </p>
             </div>
 
-            {/* ফিচার গ্রিড: ক্যাপাসিটি ও বেস রেট */}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
                 <div className="p-3 rounded-xl bg-white dark:bg-slate-900 shadow-sm text-[#163962] dark:text-white">
@@ -132,7 +132,7 @@ const CardDetails = ({ featureCard }) => {
               </div>
             </div>
 
-            {/* ইনক্লুডেড অ্যামেনিটিজ বা সুযোগ সুবিধা */}
+            
             <div className="flex flex-wrap gap-x-6 gap-y-2.5 text-xs font-bold text-slate-500 dark:text-slate-400 pt-1">
               <span className="flex items-center gap-2 group">
                 <FaCheckCircle className="text-emerald-500 group-hover:scale-110 transition-transform" /> 

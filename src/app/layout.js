@@ -23,14 +23,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
   return (
     <html
       lang="en"
-    
       className={`${poppins.variable} ${inter.variable} h-full antialiased`}
     >
-      
       <body className="">
         <ThemeProviderWrapper>
           <Navbar></Navbar>
@@ -50,7 +47,6 @@ export default function RootLayout({ children }) {
           theme="light"
           transition={Slide}
         />
-        
       </body>
     </html>
   );

@@ -23,6 +23,7 @@ export const featureCardDetails = async (id) => {
       },
     },
   );
+
   return data.json();
 };
 

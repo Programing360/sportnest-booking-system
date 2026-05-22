@@ -5,7 +5,7 @@ import React from "react";
 const EditFacilityPage = async ({ params }) => {
   const { id } = await params;
   const facilityData = await allFeatureData(id);
-const filterFacilities = facilityData.filter(item => item._id === id)
+  const filterFacilities = facilityData.filter((item) => item._id === id);
   if (!facilityData) {
     return (
       <div className="text-center py-20">
@@ -16,7 +16,9 @@ const filterFacilities = facilityData.filter(item => item._id === id)
 
   return (
     <div className="dark:bg-neutral-900">
-        {filterFacilities.map(item => <EditFacilityForm key={item._id} facilityData={item} id={id} />)}
+      {filterFacilities.map((item) => (
+        <EditFacilityForm key={item._id} facilityData={item} id={id} />
+      ))}
     </div>
   );
 };

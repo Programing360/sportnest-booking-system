@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SportNest Booking System
 
-## Getting Started
+## Overview
+SportNest Booking System is a modern and responsive sports facility booking platform designed to simplify the process of discovering, scheduling, and managing sports venue reservations. The application provides a seamless user experience with secure authentication, dynamic booking features, and an intuitive interface for both desktop and mobile users.
 
-First, run the development server:
+## Live Demo
+https://sportnest-booking-system.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Key Features
+- Secure User Authentication & Authorization
+- Sports Facility Booking & Management System
+- Fully Responsive User Interface
+- Dark & Light Theme Support
+- Protected Private Routes
+- Dynamic Search & Filtering System
+- Real-Time Toast Notifications
+- Smooth UI Animations with Framer Motion
+- Dashboard for Managing User Bookings
+- Frontend Route Protection using Proxy.js
+- Backend Security using JWT Verification & Authorization
+- Password Encryption using bcryptjs
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies & NPM Packages Used
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Frontend
+- Next.js
+- React.js
+- Tailwind CSS
+- HeroUI
+- Framer Motion
+- AOS Animition 
+- Next Themes
+- React Toastify
+- Lucide React
+- React Icon
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+### Backend & Database
+- Node.js
+- Express.js
+- MongoDB
+- Better Auth
 
-To learn more about Next.js, take a look at the following resources:
+### Authentication & Security
+- JSON Web Token (JWT) 
+- Proxy.js for Frontend Route Protection
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
