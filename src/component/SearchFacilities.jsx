@@ -13,7 +13,8 @@ const SearchFacilities = ({ featureData = [] }) => {
   const [selectedSport, setSelectedSport] = useState("All");
   const [loading, setLoading] = useState(false);
 
-  
+  // console.log(se);
+
   const handleSearch = async () => {
     try {
       setLoading(true);
@@ -22,10 +23,11 @@ const SearchFacilities = ({ featureData = [] }) => {
       );
       const result = await res.json();
       setFilterData(result);
+      setSelectedSport('All')
     } catch (error) {
       toast.error(error);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,22 +35,26 @@ const SearchFacilities = ({ featureData = [] }) => {
     new Set(featureData.map((item) => item.sportType).filter(Boolean)),
   );
 
-  const applyFilter = (sortValue) => {
-    let updatedData = [...featureData];
-    if (sortValue && sortValue.toLowerCase() !== "all") {
-      updatedData = updatedData.filter(
-        (item) => item.sportType?.toLowerCase() === sortValue.toLowerCase(),
-      );
-    }
+  // const applyFilter = (sortValue) => {
+  //   let updatedData = [...featureData];
+  //   if (sortValue && sortValue.toLowerCase() !== "all") {
+  //     updatedData = updatedData.filter(
+  //       (item) => item.sportType?.toLowerCase() === sortValue.toLowerCase(),
+  //     );
+  //   }
 
-    setFilterData(updatedData);
-  };
+  //   setFilterData(updatedData);
+  // };
 
-  const handleFilterByType = (e) => {
+  const handleFilterByType = async (e) => {
     const value = e.target.value;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/facilitiesType?type=${value}`,
+    );
+    const result = await res.json();
+    setSearchText('')
+    setFilterData(result);
     setSelectedSport(value);
-
-    applyFilter(value);
   };
 
   return (
@@ -66,7 +72,7 @@ const SearchFacilities = ({ featureData = [] }) => {
               <SearchField.Input
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                className="w-full pl-11 pr-24 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl outline-none focus:border-orange-500 focus:bg-white transition-all text-sm font-medium placeholder:text-gray-400 shadow-sm"
+                className="w-full pl-11 pr-24 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl outline-none focus:border-orange-500 focus:bg-white dark:focus:text-black transition-all text-sm font-medium placeholder:text-gray-400 shadow-sm"
                 placeholder="Search destinations..."
               />
 
@@ -114,10 +120,13 @@ const SearchFacilities = ({ featureData = [] }) => {
 
       {filterData.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-          {loading ? <Loading></Loading> : filterData.map((feature) => (
-            <FeatureCard key={feature._id} feature={feature} />
-          ))}
-
+          {loading ? (
+            <Loading></Loading>
+          ) : (
+            filterData.map((feature) => (
+              <FeatureCard key={feature._id} feature={feature} />
+            ))
+          )}
         </div>
       ) : (
         <div className="text-center py-20 bg-gray-50/50 rounded-[2rem] border border-dashed border-gray-200 max-w-md mx-auto px-6 mt-10">

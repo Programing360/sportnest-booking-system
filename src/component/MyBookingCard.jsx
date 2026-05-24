@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { Card, CardBody, Button, Chip } from "@heroui/react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Card, Button, Chip } from "@heroui/react";
 import {
   CalendarDays,
   Clock,
@@ -12,45 +12,37 @@ import {
   AlertCircle,
   XCircle,
   Eye,
-  Trash2,
   ImageOff,
 } from "lucide-react";
-
-import { toast } from "react-toastify";
 import BookingDelete from "./shered/BookingDelete";
 
 const MyBookingCard = ({ bookingCard }) => {
-  const { facilityName, hours, status, timeSlot, totalPrice, _id, image } =
+  const { facilityName, hours, status, timeSlot, totalPrice, _id, image,facility_id } =
     bookingCard || {};
 
   const isValidImage = typeof image === "string" && image.trim() !== "";
-
 
   const getStatusConfig = (statusText) => {
     switch (statusText?.toLowerCase()) {
       case "confirmed":
         return {
-          color: "success",
-          icon: <CheckCircle2 size={14} />,
-          class: "bg-emerald-50 text-emerald-700 border-emerald-200/60",
+          icon: <CheckCircle2 size={13} className="shrink-0" />,
+          class: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-800/30",
         };
       case "pending":
         return {
-          color: "warning",
-          icon: <AlertCircle size={14} />,
-          class: "bg-amber-50 text-amber-700 border-amber-200/60",
+          icon: <AlertCircle size={13} className="shrink-0" />,
+          class: "bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400 border-amber-200/50 dark:border-amber-800/30",
         };
       case "cancelled":
         return {
-          color: "danger",
-          icon: <XCircle size={14} />,
-          class: "bg-rose-50 text-rose-700 border-rose-200/60",
+          icon: <XCircle size={13} className="shrink-0" />,
+          class: "bg-rose-50 text-rose-700 dark:bg-rose-950/30 dark:text-rose-400 border-rose-200/50 dark:border-rose-800/30",
         };
       default:
         return {
-          color: "default",
-          icon: <Activity size={14} />,
-          class: "bg-gray-50 text-gray-700 border-gray-200/60",
+          icon: <Activity size={13} className="shrink-0" />,
+          class: "bg-slate-50 text-slate-700 dark:bg-slate-800/50 dark:text-slate-400 border-slate-200/50 dark:border-slate-800/30",
         };
     }
   };
@@ -60,88 +52,83 @@ const MyBookingCard = ({ bookingCard }) => {
   return (
     <Card
       shadow="none"
-      className="w-full bg-white border-gray-100 hover:border-purple-100 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-purple-600/[0.02] transition-all duration-400 mt-4 group relative overflow-hidden "
+      className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-3xl shadow-md hover:shadow-xl shadow-slate-100/60 dark:shadow-none transition-all duration-300 mt-4 group relative overflow-hidden"
     >
-      <div className="p-0">
-        <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-transparent group-hover:bg-purple-600 transition-colors duration-300 z-20" />
+      <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-transparent group-hover:bg-orange-500 transition-colors duration-300 z-20" />
 
-        <div className="flex flex-col sm:flex-row items-center gap-6 p-5 sm:p-6 w-full">
-          <div className="relative w-full sm:w-44 h-32 shrink-0 overflow-hidden rounded-xl bg-gray-50 border border-gray-100">
+      <div className="flex flex-col sm:flex-row items-center gap-5 p-5 sm:p-6 w-full">
+        
+        <div className="relative w-full sm:w-40 h-28 shrink-0 overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/50">
+          {isValidImage ? (
             <Image
               src={image}
-              alt={facilityName}
+              alt={facilityName || "Facility"}
               fill
-              sizes="(max-width: 640px) 100vw, 200px"
-              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              sizes="(max-width: 640px) 100vw, 160px"
+              className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             />
-
-            {!isValidImage && (
-              <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px] flex items-center justify-center text-white">
-                <div className="flex items-center gap-1 bg-black/60 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
-                  <ImageOff size={10} />
-                  <span>Default Preview</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="space-y-3 flex-1 w-full text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start gap-3 flex-wrap">
-              <Chip
-                startcontent={statusConfig.icon}
-                variant="flat"
-                className={`font-extrabold text-[10px] uppercase tracking-wider border px-2.5 h-7 ${statusConfig.class}`}
-              >
-                {status || "Unknown"}
-              </Chip>
-
-              <div className="flex items-center gap-1 text-xs font-bold text-gray-400 bg-gray-50 px-2.5 py-1 rounded-xl border border-gray-100">
-                <Clock size={12} className="text-purple-500" />
-                <span>
-                  {hours} {hours > 1 ? "Hrs Slot" : "Hr Slot"}
-                </span>
-              </div>
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 gap-1.5">
+              <ImageOff size={24} className="stroke-[1.5]" />
+              <span className="text-[9px] font-black tracking-widest uppercase">No Preview</span>
             </div>
+          )}
+        </div>
 
-            <h1 className="text-xl font-black text-gray-900 tracking-tight group-hover:text-purple-600 transition-colors duration-300">
-              {facilityName}
-            </h1>
+        <div className="space-y-2.5 flex-1 w-full text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+            <Chip
+              startContent={statusConfig.icon}
+              variant="flat"
+              className={`font-black text-[10px] uppercase tracking-wider border h-6 px-2 rounded-lg ${statusConfig.class}`}
+            >
+              {status || "Unknown"}
+            </Chip>
 
-            <div className="inline-flex items-center gap-2 bg-gray-50/70 border border-gray-100/80 px-3 py-1.5 rounded-xl text-xs font-bold text-gray-600">
-              <CalendarDays size={14} className="text-cyan-500" />
-              <span className="font-mono tracking-wide">{timeSlot}</span>
+            <div className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-950 px-2 py-1 rounded-lg border border-slate-100 dark:border-slate-800/60">
+              <Clock size={11} className="text-orange-500 stroke-[2.5]" />
+              <span>
+                {hours} {hours > 1 ? "Hrs Slot" : "Hr Slot"}
+              </span>
             </div>
           </div>
 
-          <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 border-t sm:border-t-0 pt-4 sm:pt-0 border-gray-50 w-full sm:w-auto shrink-0">
-            <div className="sm:text-right">
-              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">
-                Total Amount
-              </p>
-              <div className="flex items-center text-xl font-black text-gray-900">
-                <DollarSign
-                  size={16}
-                  className="text-purple-500 -mr-0.5 shrink-0"
-                />
-                <span>{totalPrice?.toLocaleString()}</span>
-              </div>
-            </div>
+          <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 tracking-tight group-hover:text-orange-500 transition-colors duration-300 line-clamp-1">
+            {facilityName}
+          </h3>
 
-            <div className="flex items-center sm:flex-col gap-2 w-full sm:w-auto">
-              <Link href={`/featureCartDetails/${_id}`}>
-                <Button
-                  size="sm"
-                  variant="flat"
-                  startcontent={<Eye size={12} />}
-                  className="font-bold px-4 h-9 rounded-xl uppercase tracking-wider text-[10px] w-full bg-purple-50 hover:bg-purple-100 text-purple-700 transition-all cursor-pointer"
-                >
-                  View
-                </Button>
-              </Link>
-            </div>
-            <BookingDelete id={_id}></BookingDelete>
+          <div className="inline-flex items-center gap-2 bg-slate-50/80 dark:bg-slate-950/80 border border-slate-100/80 dark:border-slate-800/40 px-2.5 py-1 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400">
+            <CalendarDays size={13} className="text-[#163962] dark:text-orange-400" />
+            <span className="font-medium tracking-wide">{timeSlot}</span>
           </div>
         </div>
+
+        <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 border-t sm:border-t-0 pt-4 sm:pt-0 border-slate-50 dark:border-slate-800/40 w-full sm:w-auto shrink-0">
+          <div className="sm:text-right">
+            <p className="text-[9px] text-slate-400 dark:text-slate-500 font-black uppercase tracking-widest mb-0.5">
+              Total Amount
+            </p>
+            <div className="flex items-center text-xl font-black text-slate-800 dark:text-white">
+              <DollarSign size={15} className="text-orange-500 -mr-0.5 shrink-0 stroke-[2.5]" />
+              <span>{totalPrice?.toLocaleString()}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 w-auto sm:w-full">
+            <Link href={`/featureCartDetails/${facility_id}`} className="w-full">
+              <Button
+                size="sm"
+                variant="flat"
+                startContent={<Eye size={12} className="stroke-[2.5]" />}
+                className="font-black px-3.5 h-8 rounded-xl uppercase tracking-wider text-[10px] w-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all cursor-pointer"
+              >
+                View
+              </Button>
+            </Link>
+            <BookingDelete id={_id} />
+          </div>
+        </div>
+
       </div>
     </Card>
   );

@@ -2,9 +2,29 @@
 import { headers } from "next/headers";
 import { auth } from "./auth";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const allFeatureData = async () => {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/facilities`);
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/facilities`, {
+    cache: "no-store",
+  });
+  return data.json();
+};
+
+export const ownerFacilitiesData = async (id) => {
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  if (!token) {
+    return redirect("/login");
+  }
+
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ownFacilities/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
   return data.json();
 };
 
@@ -27,14 +47,11 @@ export const featureCardDetails = async (id) => {
   return data.json();
 };
 
-
-
-
 export const AddFacilityFeature = async (allFeatureInfo) => {
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
-if (!token) {
+  if (!token) {
     return redirect("/login");
   }
 
@@ -65,6 +82,10 @@ export const deleteFaclities = async (id) => {
       },
     },
   );
+  if (res) {
+    revalidatePath("/");
+  }
+
   return res.json();
 };
 

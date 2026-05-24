@@ -4,7 +4,7 @@ import Footer from "@/component/Footer";
 import { Slide, ToastContainer } from "react-toastify";
 
 import Navbar from "@/component/Navbar";
-import { ThemeProviderWrapper } from "@/component/ThemeProvider";
+import ThemeProviderWrapper from "@/component/ThemeProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,6 +26,8 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      data-theme="light"
+      suppressHydrationWarning
       className={`${poppins.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="">

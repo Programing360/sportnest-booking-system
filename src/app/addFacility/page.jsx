@@ -20,6 +20,7 @@ const AddFacility = () => {
 
     const allFeatureInfo = {
       ownerEmail: user?.email,
+      ownerId: user?.id,
       name: facilitiesData.name,
       sportType: facilitiesData.facilityType,
       image: facilitiesData.url,
@@ -32,7 +33,6 @@ const AddFacility = () => {
       createAt: new Date(),
     };
     const res = await AddFacilityFeature(allFeatureInfo);
-    console.log(allFeatureInfo, res);
     try {
       if (res?.insertedId) {
         toast.success("Facility Added Successfully!");

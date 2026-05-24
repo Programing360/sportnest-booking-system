@@ -59,7 +59,6 @@ const FeatureCard = ({ feature }) => {
         toast.error("Booking Failed. Please try again.");
       }
     } catch (err) {
-      console.error(err);
       toast.error("An unexpected error occurred.");
     } finally {
       setIsBooking(false);

@@ -19,7 +19,7 @@ const MyBookingPage = async () => {
         My Booking Page
       </h2>
 
-      <div className="container mx-auto mt-6">
+      <div className="container mx-auto mt-6 min-h-screen">
         {bookingColl && bookingColl.length > 0 ? (
           <div className=" mt-7 px-4">
             {bookingColl?.map((booking) => (

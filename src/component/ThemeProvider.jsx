@@ -1,28 +1,26 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 
-export const ThemeProviderWrapper = ({ children }) => {
+export default function ThemeProviderWrapper({ children }) {
   const [mounted, setMounted] = useState(false);
 
-  // Wait until the component is mounted on the client
   useEffect(() => {
+    setMounted(false);
     setMounted(true);
   }, []);
 
-  // Before mounting, just render the children normally without the wrapper
   if (!mounted) {
-    return <div>{children}</div>;
+    return <>{children}</>;
   }
 
   return (
     <ThemeProvider
       attribute="class"
       defaultTheme="light"
-      enableSystem={false}
       
     >
       {children}
     </ThemeProvider>
   );
-};
+}

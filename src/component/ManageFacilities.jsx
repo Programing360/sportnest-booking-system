@@ -18,7 +18,7 @@ const ManageFacilities = ({ ownerFacilities = [] }) => {
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
- 
+//  console.log(ownerFacilities);
 
 
   const handleOpenDeleteModal = (facility) => {

@@ -13,8 +13,8 @@ export async function proxy(request) {
 }
 
 // Alternatively, you can use a default export:
-// export default function proxy(request) { ... }
+// export default function proxy(request) { ... }, "/manageFacilities" 
 
 export const config = {
-  matcher: ["/myBookings", "/addFacility", "/manageFacilities" ],
+  matcher: ["/myBookings", "/addFacility"],
 };
